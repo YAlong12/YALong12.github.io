@@ -6,32 +6,28 @@ import EventCard from '../components/EventCard';
 const EventList = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  // Fetch events from your back-end API
   useEffect(() => {
-    axios.get('http://localhost:3000/api/events')
+    axios.get('http://localhost:3000/api/events')  // Adjust URL if needed
       .then(response => {
         setEvents(response.data);
         setLoading(false);
       })
-      .catch(err => {
-        console.error('Error fetching events:', err);
-        setError(err);
+      .catch(error => {
+        console.error('Error fetching events:', error);
         setLoading(false);
       });
   }, []);
 
-  const handleRegister = (eventId) => {
-    // Add registration logic here (e.g., open a modal or navigate to a registration form)
-    alert(`Register for event ${eventId}`);
+  const handleRegister = (id) => {
+    // Trigger registration functionality (e.g., open a modal or redirect)
+    alert(`Register for event ${id}`);
   };
 
   if (loading) return <p>Loading events...</p>;
-  if (error) return <p>Error loading events.</p>;
 
   return (
-    <div className="event-list">
+    <div className="event-list container">
       <h1>Upcoming Events</h1>
       {events.length === 0 ? (
         <p>No events available at the moment.</p>
@@ -45,3 +41,4 @@ const EventList = () => {
 };
 
 export default EventList;
+

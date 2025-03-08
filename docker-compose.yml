@@ -1,14 +1,16 @@
+version: '3.8'
 services:
   backend:
     build: ./cassie-backend
     ports:
-      - "3000:3000"
+      - "3002:3000"  # Example: container's port 3000 mapped to host port 3002
     volumes:
       - ./cassie-backend:/app
+      - /app/node_modules
     env_file:
       - ./cassie-backend/.env
-    depends_on:
-      - frontend
+    environment:
+      - NODE_ENV=development
 
   frontend:
     build: ./cassie-frontend
@@ -16,7 +18,13 @@ services:
       - "3001:3000"
     volumes:
       - ./cassie-frontend:/app
+      - /app/node_modules
+    environment:
+      - SKIP_PREFLIGHT_CHECK=true
+      - WDS_SOCKET_PORT=3001
+      - WATCHPACK_POLLING=true
+      - NODE_OPTIONS=--openssl-legacy-provider
+    stdin_open: true
+    tty: true
     depends_on:
       - backend
-
-# Remove the mongodb service since we're using Atlas 

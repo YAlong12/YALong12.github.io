@@ -1,6 +1,6 @@
 // src/components/EventCard.jsx
 import React from 'react';
-import './EventCard.css'; // Optional: create a CSS file for styling
+import './EventCard.css';
 
 const EventCard = ({ event, onRegister }) => {
   return (
@@ -15,3 +15,4 @@ const EventCard = ({ event, onRegister }) => {
 };
 
 export default EventCard;
+

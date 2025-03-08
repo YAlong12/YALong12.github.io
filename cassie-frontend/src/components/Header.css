@@ -1,0 +1,25 @@
+/* Mimic the Gilbert look with deep blue and clean white */
+.site-header {
+    background-color: #003366;
+    color: #fff;
+    padding: 1rem 0;
+  }
+  .site-title {
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 2rem;
+  }
+  .site-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+  .site-nav li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  .site-nav li a:hover {
+    text-decoration: underline;
+  }
+  

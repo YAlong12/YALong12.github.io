@@ -1,31 +1,26 @@
 // src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './pages/Home';
 import EventList from './pages/EventList';
+import Dashboard from './pages/Dashboard';
+import './App.css';
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <nav className="App-nav">
-          <Link to="/">Home</Link> | <Link to="/events">Events</Link>
-        </nav>
+      <Header />
+      <main className="container">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/events" element={<EventList />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
-      </div>
+      </main>
+      <Footer />
     </Router>
-  );
-}
-
-function Home() {
-  return (
-    <header className="App-header">
-      <h1>Welcome to Cassie</h1>
-      <p>Your event registration app is under development!</p>
-    </header>
   );
 }
 

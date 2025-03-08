@@ -10,15 +10,16 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
-// MongoDB connection
-const mongoUri = process.env.MONGODB_URI.replace('<db_password>', process.env.DB_PASSWORD);
-
-mongoose.connect(mongoUri, {
+// MongoDB connection with better error handling
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
 .then(() => console.log('Connected to MongoDB Atlas'))
-.catch(err => console.error('MongoDB connection error:', err));
+.catch(err => {
+    console.error('MongoDB connection error:', err);
+    console.error('Please check your MongoDB connection string and credentials');
+});
 
 app.get('/', (req, res) => {
   res.send('Cassie API Running');
