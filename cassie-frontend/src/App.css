@@ -1,9 +1,28 @@
 /* src/App.css */
+
+/* 
+  Define your color palette using CSS variables.
+  Replace these placeholders with your actual hex codes from the screenshot.
+*/
+:root {
+  --color-cream: #F5EFE5;     /* Light cream */
+  --color-red: #C81E31;       /* Bright red */
+  --color-orange: #ED6B29;    /* Orange */
+  --color-orange-dark: #EA8C55;
+  --color-gold: #F2AF5C;
+  --color-navy: #003366;      /* Deep navy (like Gilbert's branding) */
+  --color-midnight: #1C1C1C;  /* Dark neutral */
+  --color-blue: #1B3A61;      /* Another possible accent blue */
+}
+
+/* Global reset or normalization can go here if needed */
+
+/* Basic global styling */
 body {
   margin: 0;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
+  background-color: var(--color-cream);
+  color: var(--color-midnight);
 }
 
 .container {
@@ -15,4 +34,24 @@ body {
 
 main {
   padding: 2rem 0;
+}
+
+/* Utility classes */
+.text-center {
+  text-align: center;
+}
+
+.btn {
+  background-color: var(--color-navy);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #002244; /* Slightly darker navy */
 }

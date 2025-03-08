@@ -1,8 +1,15 @@
+/* src/components/Footer.css */
+
 .site-footer {
-    background-color: #003366;
+    background-color: var(--color-navy);
     color: #fff;
     padding: 1rem 0;
     text-align: center;
     font-size: 0.9rem;
+  }
+  
+  .site-footer .container {
+    display: flex;
+    justify-content: center;
   }
   

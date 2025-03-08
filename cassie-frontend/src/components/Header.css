@@ -1,25 +1,38 @@
-/* Mimic the Gilbert look with deep blue and clean white */
+/* src/components/Header.css */
+
 .site-header {
-    background-color: #003366;
+    background-color: var(--color-navy);
     color: #fff;
     padding: 1rem 0;
   }
+  
+  .site-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
   .site-title {
     margin: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 2rem;
   }
+  
   .site-nav ul {
     list-style: none;
     display: flex;
     gap: 1rem;
+    margin: 0;
+    padding: 0;
   }
+  
   .site-nav li a {
     color: #fff;
     text-decoration: none;
     font-size: 1rem;
+    transition: color 0.3s;
   }
+  
   .site-nav li a:hover {
-    text-decoration: underline;
+    color: var(--color-gold); /* Example hover color */
   }
   
