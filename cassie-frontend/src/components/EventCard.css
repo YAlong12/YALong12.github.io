@@ -1,0 +1,10 @@
+/* src/components/EventCard.css */
+.event-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #fff;
+  }
+
+  
