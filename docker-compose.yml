@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: ./cassie-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./cassie-backend:/app
+    env_file:
+      - ./cassie-backend/.env
+    depends_on:
+      - frontend
+
+  frontend:
+    build: ./cassie-frontend
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./cassie-frontend:/app
+    depends_on:
+      - backend
+
+# Remove the mongodb service since we're using Atlas 
