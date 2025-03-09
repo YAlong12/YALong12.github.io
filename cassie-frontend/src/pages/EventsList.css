@@ -1,0 +1,60 @@
+/* src/pages/EventsList.css */
+
+.events-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #F5EFE5; /* Matches site background */
+  color: #242938; /* Text color */
+}
+
+/* Ensures it doesn't affect the navigation */
+.events-list-container ul {
+  padding: 0;
+  margin: 0;
+}
+
+.events-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+/* Ensures the menu is not affected */
+.events-list-container .events-menu {
+  display: inline;
+}
+
+/* Event Cards */
+.event-card {
+  background: white;
+  border: 2px solid #242938;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Fix button styles */
+.details-button {
+  display: inline-block;
+  background-color: #D9534F;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.details-button:hover {
+  background-color: #C9302C;
+}

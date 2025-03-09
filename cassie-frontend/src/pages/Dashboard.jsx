@@ -1,13 +1,14 @@
 // src/pages/Dashboard.jsx
 import React from 'react';
+import './Dashboard.css';
 
-const Dashboard = () => {
+function Dashboard() {
   return (
-    <div className="container">
-      <h1>Your Dashboard</h1>
-      <p>Manage your event registrations here.</p>
+    <div className="page-container">
+      <h1>Your Registered Events</h1>
+      <p>You haven't registered for any events yet.</p>
     </div>
   );
-};
+}
 
 export default Dashboard;

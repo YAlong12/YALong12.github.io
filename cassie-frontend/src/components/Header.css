@@ -1,38 +1,95 @@
 /* src/components/Header.css */
 
+/* Header Styling */
 .site-header {
-    background-color: var(--color-navy);
-    color: #fff;
+    background-color: #242938; /* Matches footer */
+    color: #ffffff;
     padding: 1rem 0;
+    width: 100%;
+    position: relative;
+    z-index: 1000; /* Ensures menu stays on top */
   }
   
-  .site-header .container {
+  /* Flex container to align items */
+  .header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* Ensures logo stays left, menu stays right */
+    padding: 0 20px;
   }
   
-  .site-title {
-    margin: 0;
-    font-size: 2rem;
+  /* Logo */
+  .logo-container {
+    flex-grow: 1;
+  }
+  
+  .gilbert-logo {
+    height: 50px;
+    width: auto;
+  }
+  
+  /* Navigation */
+  .site-nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end; /* Right-aligns the menu */
   }
   
   .site-nav ul {
     list-style: none;
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     margin: 0;
     padding: 0;
   }
   
-  .site-nav li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s;
+  .site-nav li {
+    position: relative;
   }
   
-  .site-nav li a:hover {
-    color: var(--color-gold); /* Example hover color */
+  .site-nav a {
+    color: #ffffff; /* White text */
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .site-nav a:hover {
+    color: #D9534F; /* Hover effect: Gilbert red */
+  }
+  
+  /* Fix for Submenu ONLY Appearing on Hover */
+  .events-menu .sub-menu {
+    display: none; /* Hide submenu by default */
+    position: absolute;
+    top: 100%; /* Aligns directly under "Events" */
+    left: 0;
+    background-color: #242938; /* Matches header color */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    width: 180px;
+    z-index: 2000;
+  }
+  
+  /* Ensures dropdown appears ONLY on hover */
+  .events-menu:hover > .sub-menu {
+    display: block;
+  }
+  
+  /* Submenu Links */
+  .sub-menu li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #ffffff; /* White text */
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover effect for dropdown links */
+  .sub-menu li a:hover {
+    background-color: #3a3f5a; /* Slightly lighter for hover effect */
   }
   

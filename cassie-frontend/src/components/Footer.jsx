@@ -1,15 +1,13 @@
 // src/components/Footer.jsx
 import React from 'react';
-import './Footer.css'; // Create this file for styling
+import './Footer.css';
 
-const Footer = () => {
+function Footer() {
   return (
     <footer className="site-footer">
-      <div className="container">
-        <p>&copy; {new Date().getFullYear()} Cassie. All rights reserved.</p>
-      </div>
+      <p>&copy; {new Date().getFullYear()} Town of Gilbert Events</p>
     </footer>
   );
-};
+}
 
 export default Footer;
