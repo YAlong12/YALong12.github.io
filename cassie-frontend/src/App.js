@@ -11,6 +11,8 @@ import Activities from './pages/Activities';
 import LocalEvents from './pages/LocalEvents';
 import SportsSchedules from './pages/SportsSchedules';
 import AdminDashboard from './pages/AdminDashboard';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import './App.css'; // Keep global styles
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
             <Route path="/pages/local-events" element={<LocalEvents />} />
             <Route path="/pages/sports-schedules" element={<SportsSchedules />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </div>
         <Footer />

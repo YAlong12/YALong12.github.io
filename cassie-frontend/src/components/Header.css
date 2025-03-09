@@ -1,95 +1,107 @@
-/* src/components/Header.css */
+/* Small Top Navigation Bar */
+.top-nav {
+    background-color: #242938;
+    padding: 2px 20px;
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-/* Header Styling */
-.site-header {
-    background-color: #242938; /* Matches footer */
-    color: #ffffff;
-    padding: 1rem 0;
-    width: 100%;
-    position: relative;
-    z-index: 1000; /* Ensures menu stays on top */
-  }
-  
-  /* Flex container to align items */
-  .header-content {
+.top-nav-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3px 0;
+}
+
+.auth-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 0 5px;
+    opacity: 0.8;
+}
+
+.auth-links a:hover {
+    opacity: 1;
+}
+
+.language-selector {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+/* Main Header */
+.header {
+    display: flex;
+    color: #fff;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #242938;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Ensures logo stays left, menu stays right */
-    padding: 0 20px;
-  }
-  
-  /* Logo */
-  .logo-container {
-    flex-grow: 1;
-  }
-  
-  .gilbert-logo {
+}
+
+.gilbert-logo {
     height: 50px;
     width: auto;
-  }
-  
-  /* Navigation */
-  .site-nav {
-    flex-grow: 1;
+}
+
+/* Navigation Menu */
+.nav-links {
     display: flex;
-    justify-content: flex-end; /* Right-aligns the menu */
-  }
-  
-  .site-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .site-nav li {
-    position: relative;
-  }
-  
-  .site-nav a {
-    color: #ffffff; /* White text */
+    gap: 2rem;
+    margin-left: auto;
+    align-items: center;
+    color: #fff;
+}
+
+.nav-links a {
     text-decoration: none;
-    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
     padding: 0.5rem 1rem;
     transition: color 0.3s ease;
-  }
-  
-  .site-nav a:hover {
-    color: #D9534F; /* Hover effect: Gilbert red */
-  }
-  
-  /* Fix for Submenu ONLY Appearing on Hover */
-  .events-menu .sub-menu {
-    display: none; /* Hide submenu by default */
+    color: #fff;
+}
+
+.nav-links a:hover {
+    color: #007bff;
+}
+
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
     position: absolute;
-    top: 100%; /* Aligns directly under "Events" */
-    left: 0;
-    background-color: #242938; /* Matches header color */
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    width: 180px;
-    z-index: 2000;
-  }
-  
-  /* Ensures dropdown appears ONLY on hover */
-  .events-menu:hover > .sub-menu {
+    background-color: #242938;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.dropdown:hover .dropdown-content {
     display: block;
-  }
-  
-  /* Submenu Links */
-  .sub-menu li a {
-    display: block;
-    padding: 10px;
+}
+
+.dropdown-content a {
+    color: #fff;
+    padding: 12px 16px;
     text-decoration: none;
-    color: #ffffff; /* White text */
-    transition: background-color 0.3s ease;
-  }
-  
-  /* Hover effect for dropdown links */
-  .sub-menu li a:hover {
-    background-color: #3a3f5a; /* Slightly lighter for hover effect */
-  }
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f8f9fa;
+}
   

@@ -4,6 +4,8 @@ const cors = require('cors');
 require('dotenv').config();
 
 const eventsRoutes = require('./routes/events');
+app.use('/api/auth', authRoutes);
+
 
 const app = express();
 app.use(cors());

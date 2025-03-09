@@ -1,17 +1,56 @@
-.home-container {
-    text-align: center;
-    padding: 50px;
-  }
-  
-  .cta-button {
-    display: inline-block;
-    background-color: #d9534f;
-    color: #F5EFE5;
-    padding: 12px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-  }
-  
-  .cta-button:hover {
-    background-color: #c9302c;
-  }  
+.home {
+  min-height: calc(100vh - 120px);
+}
+
+.hero {
+  background-color: #242938;
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card h3 {
+  color: #242938;
+  margin-bottom: 1rem;
+}
+
+.feature-card p {
+  color: #666;
+}  

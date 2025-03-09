@@ -1,39 +1,46 @@
-// src/components/Header.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import gilbertLogo from '../assets/gilbert-logo.png';
 
-function Header() {
+const Header = () => {
   return (
-    <header className="site-header">
-      <div className="container header-content">
-        {/* Logo Section */}
-        <div className="logo-container">
+    <>
+      {/* Top Navigation Bar */}
+      <div className="top-nav">
+        <div className="top-nav-content">
+          <div className="language-selector">
+            🌍 English ▼
+          </div>
+          <div className="auth-links">
+            <Link to="/login" className="login-link">Sign In</Link> |
+            <Link to="/register" className="login-link"> Create an Account</Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Header */}
+      <header className="header">
+        <div className="logo">
           <Link to="/">
             <img src={gilbertLogo} alt="Gilbert Logo" className="gilbert-logo" />
           </Link>
         </div>
-
-        {/* Navigation */}
-        <nav className="site-nav">
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li className="events-menu">
-              <Link to="/events">Events</Link>
-              {/* Dropdown submenu appears on hover */}
-              <ul className="sub-menu">
-                <li><Link to="/events/activities">Activities</Link></li>
-                <li><Link to="/events/local-events">Local Events</Link></li>
-                <li><Link to="/events/sports-schedules">Sports Schedules</Link></li>
-              </ul>
-            </li>
-            <li><Link to="/dashboard">Dashboard</Link></li>
-          </ul>
+        <nav className="nav-links">
+          <Link to="/">Home</Link>
+          <div className="dropdown">
+            <Link to="/events">Events ▼</Link>
+            <div className="dropdown-content">
+              <Link to="/events/activities">Activities</Link>
+              <Link to="/events/local-events">Local Events</Link>
+              <Link to="/events/sports">Sports Schedules</Link>
+            </div>
+          </div>
+          <Link to="/dashboard">Dashboard</Link>
         </nav>
-      </div>
-    </header>
+      </header>
+    </>
   );
-}
+};
 
 export default Header;

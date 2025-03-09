@@ -2,13 +2,32 @@
 import React from 'react';
 import './Home.css';
 
-function Home() {
+const Home = () => {
   return (
-    <div className="page-container">
-      <h1>Welcome to Gilbert Events</h1>
-      <p>Discover and participate in community events in Gilbert.</p>
+    <div className="home">
+      <section className="hero">
+        <div className="hero-content">
+          <h1>Welcome to Gilbert Events</h1>
+          <p>Discover and join exciting events in your community</p>
+        </div>
+      </section>
+
+      <section className="features">
+        <div className="feature-card">
+          <h3>Local Events</h3>
+          <p>Find events happening near you</p>
+        </div>
+        <div className="feature-card">
+          <h3>Activities</h3>
+          <p>Join community activities and programs</p>
+        </div>
+        <div className="feature-card">
+          <h3>Sports</h3>
+          <p>Stay updated with sports schedules</p>
+        </div>
+      </section>
     </div>
   );
-}
+};
 
 export default Home;
