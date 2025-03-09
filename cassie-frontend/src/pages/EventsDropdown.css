@@ -1,0 +1,57 @@
+/* src/pages/EventsDropdown.css */
+
+/* General Styling for Event Pages */
+.events-dropdown-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #F5EFE5; /* Matches global theme */
+    color: #242938; /* Text color */
+  }
+  
+  /* Page Title */
+  .events-dropdown-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Event List Layout */
+  .events-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* Individual Event Card */
+  .event-card {
+    background: white;
+    border: 2px solid #242938; /* Matches header/footer */
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Event Title */
+  .event-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #242938;
+  }
+  
+  /* Event Details */
+  .event-card p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  

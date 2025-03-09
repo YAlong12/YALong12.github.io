@@ -7,12 +7,16 @@ import Home from './pages/Home';
 import EventsList from './pages/EventsList';
 import EventDetail from './pages/EventDetail';
 import Dashboard from './pages/Dashboard';
-import './App.css'; // Global styles
+import Activities from './pages/Activities';
+import LocalEvents from './pages/LocalEvents';
+import SportsSchedules from './pages/SportsSchedules';
+import AdminDashboard from './pages/AdminDashboard';
+import './App.css'; // Keep global styles
 
 function App() {
   return (
     <Router>
-      <div className="app-container"> {/* Wrapper for consistent background */}
+      <div className="app-container">
         <Header />
         <div className="content">
           <Routes>
@@ -20,6 +24,11 @@ function App() {
             <Route path="/events" element={<EventsList />} />
             <Route path="/events/:eventId" element={<EventDetail />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            {/* New Dropdown Pages */}
+            <Route path="/pages/activities" element={<Activities />} />
+            <Route path="/pages/local-events" element={<LocalEvents />} />
+            <Route path="/pages/sports-schedules" element={<SportsSchedules />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </div>
         <Footer />

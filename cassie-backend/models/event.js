@@ -1,14 +1,12 @@
-// cassie-backend/models/event.js
+// backend/models/Event.js
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const eventSchema = new Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  date: { type: Date, required: true },
-  location: { type: String, required: true }
-}, {
-  timestamps: true
+const EventSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+    date: String,
+    location: String,
+    category: String
 });
 
-module.exports = mongoose.model('Event', eventSchema);
+module.exports = mongoose.model('Event', EventSchema);

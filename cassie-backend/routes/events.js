@@ -1,77 +1,42 @@
-// cassie-backend/routes/events.js
 const express = require('express');
 const router = express.Router();
-const Event = require('../models/event');
+const Event = require('../models/Event');
 
-// GET /api/events - Retrieve all events
+// Get all events or filter by category
 router.get('/', async (req, res) => {
     try {
-        const events = await Event.find().sort({ date: 'asc' });
-        res.json(events);
+        const category = req.query.category;
+        const query = category ? { category } : {};
+        const events = await Event.find(query);
+        res.status(200).json(events);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Error fetching events:", error);
+        res.status(500).json({ message: 'Error fetching events', error: error.message });
     }
 });
 
-// POST /api/events - Create a new event
+// Add a new event with validation
 router.post('/', async (req, res) => {
-    const event = new Event({
-        title: req.body.title,
-        description: req.body.description,
-        date: req.body.date,
-        location: req.body.location
-    });
-
     try {
-        const newEvent = await event.save();
-        res.status(201).json(newEvent);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
+        const { title, description, date, location, category } = req.body;
 
-// GET /api/events/:id - Get a specific event
-router.get('/:id', async (req, res) => {
-    try {
-        const event = await Event.findById(req.params.id);
-        if (event) {
-            res.json(event);
-        } else {
-            res.status(404).json({ message: 'Event not found' });
+        if (!title || !description || !date || !location || !category) {
+            return res.status(400).json({ message: 'All fields are required' });
         }
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
 
-// PUT /api/events/:id - Update an event
-router.put('/:id', async (req, res) => {
-    try {
-        const event = await Event.findById(req.params.id);
-        if (event) {
-            Object.assign(event, req.body);
-            const updatedEvent = await event.save();
-            res.json(updatedEvent);
-        } else {
-            res.status(404).json({ message: 'Event not found' });
-        }
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
+        const newEvent = new Event({
+            title,
+            description,
+            date,
+            location,
+            category
+        });
 
-// DELETE /api/events/:id - Delete an event
-router.delete('/:id', async (req, res) => {
-    try {
-        const event = await Event.findById(req.params.id);
-        if (event) {
-            await event.deleteOne();
-            res.json({ message: 'Event deleted' });
-        } else {
-            res.status(404).json({ message: 'Event not found' });
-        }
+        const savedEvent = await newEvent.save();
+        res.status(201).json(savedEvent);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Error adding event:", error);
+        res.status(500).json({ message: 'Error adding event', error: error.message });
     }
 });
 
