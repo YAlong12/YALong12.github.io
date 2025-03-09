@@ -84,3 +84,30 @@
 .register-link:hover {
     text-decoration: underline;
 }
+
+/* Add these styles to your existing Auth.css */
+
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.auth-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.auth-button:disabled:hover {
+    background-color: #cccccc;
+    transform: none;
+}
+
+input:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}

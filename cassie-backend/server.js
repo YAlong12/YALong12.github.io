@@ -1,56 +1,27 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
 require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const userRoutes = require('./routes/user');
 
 const app = express();
 
 // Middleware
-app.use(cors({
-    origin: 'http://localhost:3001',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors());
 app.use(express.json());
 
-// Connection URL
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/cassie';
-
-// Connect to MongoDB with more detailed error handling
-mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => {
-    console.log("✅ Connected to MongoDB successfully");
-})
-.catch(err => {
-    console.error("❌ MongoDB connection error:", err);
-    process.exit(1); // Exit if cannot connect to database
-});
-
-// Add error handler for MongoDB connection
-mongoose.connection.on('error', err => {
-    console.error('MongoDB connection error:', err);
-});
-
-mongoose.connection.on('disconnected', () => {
-    console.log('MongoDB disconnected');
-});
-
-// Basic error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: 'Something broke!', error: err.message });
-});
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('✅ Connected to MongoDB successfully'))
+    .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
-app.use('/api/events', require('./routes/events'));
-app.use('/api/users', require('./routes/users'));
+app.use('/api/users', userRoutes);
 
-// Add a test route
-app.get('/api/test', (req, res) => {
-    res.json({ message: 'API is working' });
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'Something went wrong!' });
 });
 
 const PORT = process.env.PORT || 3002;
