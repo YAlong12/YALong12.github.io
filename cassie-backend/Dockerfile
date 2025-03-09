@@ -1,12 +1,17 @@
-FROM alpine:latest
+FROM node:18-alpine
 
-RUN apk add --update nodejs npm
+# Install build dependencies
+RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
 
 COPY package*.json ./
 
+# Install dependencies
 RUN npm install
+
+# Rebuild bcrypt
+RUN npm rebuild bcrypt --build-from-source
 
 COPY . .
 

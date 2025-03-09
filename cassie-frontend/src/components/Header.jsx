@@ -21,23 +21,25 @@ const Header = () => {
 
       {/* Main Header */}
       <header className="header">
-        <div className="logo">
-          <Link to="/">
-            <img src={gilbertLogo} alt="Gilbert Logo" className="gilbert-logo" />
-          </Link>
-        </div>
-        <nav className="nav-links">
-          <Link to="/">Home</Link>
-          <div className="dropdown">
-            <Link to="/events">Events ▼</Link>
-            <div className="dropdown-content">
-              <Link to="/events/activities">Activities</Link>
-              <Link to="/events/local-events">Local Events</Link>
-              <Link to="/events/sports">Sports Schedules</Link>
-            </div>
+        <div className="header-inner">
+          <div className="logo">
+            <Link to="/">
+              <img src={gilbertLogo} alt="Gilbert Logo" className="gilbert-logo" />
+            </Link>
           </div>
-          <Link to="/dashboard">Dashboard</Link>
-        </nav>
+          <nav className="nav-links">
+            <Link to="/">Home</Link>
+            <div className="dropdown">
+              <Link to="/events">Events ▼</Link>
+              <div className="dropdown-content">
+                <Link to="/events/activities">Activities</Link>
+                <Link to="/events/local-events">Local Events</Link>
+                <Link to="/events/sports">Sports Schedules</Link>
+              </div>
+            </div>
+            <Link to="/dashboard">Dashboard</Link>
+          </nav>
+        </div>
       </header>
     </>
   );

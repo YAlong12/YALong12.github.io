@@ -1,19 +1,21 @@
 /* Small Top Navigation Bar */
 .top-nav {
     background-color: #242938;
-    padding: 2px 20px;
+    width: 100%;
     color: #fff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Top Navigation Content */
 .top-nav-content {
     display: flex;
     justify-content: space-between;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 3px 0;
+    padding: 3px 2rem;
 }
 
+/* Auth Links */
 .auth-links a {
     color: #fff;
     text-decoration: none;
@@ -26,6 +28,7 @@
     opacity: 1;
 }
 
+/* Language Selector */
 .language-selector {
     font-size: 12px;
     opacity: 0.8;
@@ -33,15 +36,25 @@
 
 /* Main Header */
 .header {
-    display: flex;
-    color: #fff;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
     background-color: #242938;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
+/* Header Content Container */
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+}
+
+/* Logo Styling */
 .logo {
     display: flex;
     align-items: center;
@@ -63,7 +76,6 @@
 
 .nav-links a {
     text-decoration: none;
-    color: #333;
     font-weight: 500;
     padding: 0.5rem 1rem;
     transition: color 0.3s ease;
@@ -71,7 +83,7 @@
 }
 
 .nav-links a:hover {
-    color: #007bff;
+    color: #e28a21;
 }
 
 /* Dropdown Menu */
@@ -85,7 +97,7 @@
     position: absolute;
     background-color: #242938;
     min-width: 160px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     z-index: 1;
     border-radius: 4px;
 }

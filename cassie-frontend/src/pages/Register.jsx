@@ -1,38 +1,58 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
+import './Auth.css';
 
 function Register() {
-    const [userData, setUserData] = useState({ username: '', password: '' });
-    const [message, setMessage] = useState(null);
-    const [error, setError] = useState(null);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleChange = (e) => {
-        setUserData({ ...userData, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setError(null);
-        setMessage(null);
-
-        try {
-            await axios.post('http://localhost:3000/api/auth/register', userData);
-            setMessage('Registration successful! You can now log in.');
-        } catch (err) {
-            setError('Error registering user.');
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
         }
+        console.log("Registering with:", email, password);
     };
 
     return (
         <div className="auth-container">
-            <h1>Register</h1>
-            {message && <p className="success">{message}</p>}
-            {error && <p className="error">{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="username" placeholder="Username" onChange={handleChange} required />
-                <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-                <button type="submit">Register</button>
-            </form>
+            <div className="auth-box">
+                <h2>Create an Account</h2>
+                <form onSubmit={handleSubmit}>
+                    <label>Email address</label>
+                    <input
+                        type="email"
+                        placeholder="Enter your Email address"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+
+                    <label>Confirm Password</label>
+                    <input
+                        type="password"
+                        placeholder="••••••••"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+
+                    <button type="submit" className="auth-button">Join</button>
+                </form>
+
+                <p className="register-text">Already have an account? <Link to="/login" className="register-link">Sign in</Link></p>
+            </div>
         </div>
     );
 }

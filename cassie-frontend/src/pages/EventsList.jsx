@@ -1,44 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import './Home.css';
 
-function EventsList() {
-  const [events, setEvents] = useState([]);
-  const [message, setMessage] = useState(null);
-  const token = localStorage.getItem('token');
-
-  useEffect(() => {
-    axios.get('http://localhost:3000/api/events')
-      .then(response => setEvents(response.data))
-      .catch(error => console.error("Error fetching events:", error));
-  }, []);
-
-  const registerForEvent = async (eventId) => {
-    try {
-      await axios.post(`http://localhost:3000/api/events/${eventId}/register`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setMessage('Successfully registered for event!');
-    } catch (error) {
-      setMessage('Error registering. Please log in.');
-    }
-  };
-
+const Home = () => {
   return (
-    <div className="events-container">
-      <h1>Upcoming Events</h1>
-      {message && <p className="success">{message}</p>}
-      <ul className="events-list">
-        {events.map(event => (
-          <li key={event._id} className="event-card">
-            <h2>{event.title}</h2>
-            <p>{event.date} | {event.location}</p>
-            <p>{event.description}</p>
-            {token && <button onClick={() => registerForEvent(event._id)}>Register</button>}
-          </li>
-        ))}
-      </ul>
+    <div className="home">
+      <section className="hero">
+        <div className="hero-content">
+          <h1>Welcome to Cassie</h1>
+          <p>Discover and join exciting events in your community</p>
+        </div>
+      </section>
+
+      {/* White Background for Feature Cards */}
+      <section className="features-container">
+        <div className="features">
+          <div className="feature-card">
+            <h3>Local Events</h3>
+            <p>Find events happening near you</p>
+          </div>
+          <div className="feature-card">
+            <h3>Activities</h3>
+            <p>Join community activities and programs</p>
+          </div>
+          <div className="feature-card">
+            <h3>Sports</h3>
+            <p>Stay updated with sports schedules</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Background Image Section */}
+      <section className="image-section">
+        <div className="image-overlay">
+          <h2>Experience Gilbert</h2>
+          <p>Explore vibrant events, activities, and more</p>
+        </div>
+      </section>
     </div>
   );
-}
+};
 
-export default EventsList;
+export default Home;
