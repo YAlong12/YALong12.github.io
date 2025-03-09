@@ -29,14 +29,7 @@ const Header = () => {
           </div>
           <nav className="nav-links">
             <Link to="/">Home</Link>
-            <div className="dropdown">
-              <Link to="/events">Events ▼</Link>
-              <div className="dropdown-content">
-                <Link to="/events/activities">Activities</Link>
-                <Link to="/events/local-events">Local Events</Link>
-                <Link to="/events/sports">Sports Schedules</Link>
-              </div>
-            </div>
+            <Link to="/events">Events</Link>
             <Link to="/dashboard">Dashboard</Link>
           </nav>
         </div>
