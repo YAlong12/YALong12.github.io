@@ -7,7 +7,7 @@ const Home = () => {
     <div className="home">
       <section className="hero">
         <div className="hero-content">
-          <h1>Welcome to Gilbert Events</h1>
+          <h1>Welcome to Cassie</h1>
           <p>Discover and join exciting events in your community</p>
         </div>
       </section>

@@ -34,7 +34,7 @@
 }
 
 .feature-card {
-  background: white;
+  background: #1f5ca8;;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -47,10 +47,10 @@
 }
 
 .feature-card h3 {
-  color: #242938;
+  color: #fff;
   margin-bottom: 1rem;
 }
 
 .feature-card p {
-  color: #666;
+  color: #fff;
 }  
