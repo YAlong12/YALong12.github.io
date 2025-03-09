@@ -1,41 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import gilbertDowntown from '../assets/gilbert-downtown.png';
 
 const Home = () => {
   return (
     <div className="home">
-      <section className="hero">
-        <div className="hero-content">
-          <h1>Welcome to Cassie</h1>
-          <p>Discover and join exciting events in your community</p>
-          <Link to="/register" className="join-button">Join the Community</Link>
+      {/* Welcome Section */}
+      <section className="welcome">
+        <h1>Welcome to Cassie</h1>
+        <p>Discover and join exciting events in your community</p>
+      </section>
+
+      {/* Hero Image Section with Overlay */}
+      <section className="hero-image">
+        <img src={gilbertDowntown} alt="Downtown Gilbert" />
+        <div className="hero-overlay">
+          <h2>Join the Community</h2>
+          <p>Sign up now and start discovering local events!</p>
+          <Link to="/register" className="signup-button">Sign Up to Get Started</Link>
         </div>
       </section>
 
-      {/* White Background for Feature Cards */}
-      <section className="features-container">
-        <div className="features">
-          <div className="feature-card">
-            <h3>Local Events</h3>
-            <p>Find events happening near you</p>
-          </div>
-          <div className="feature-card">
-            <h3>Activities</h3>
-            <p>Join community activities and programs</p>
-          </div>
-          <div className="feature-card">
-            <h3>Sports</h3>
-            <p>Stay updated with sports schedules</p>
-          </div>
+      {/* Features Section */}
+      <section className="features">
+        <div className="feature-card">
+          <h3>Local Events</h3>
+          <p>Find events happening near you.</p>
         </div>
-      </section>
-
-      {/* Background Image Section */}
-      <section className="image-section">
-        <div className="image-overlay">
-          <h2>Experience Gilbert</h2>
-          <p>Explore vibrant events, activities, and more</p>
+        <div className="feature-card">
+          <h3>Activities</h3>
+          <p>Join community activities and programs.</p>
+        </div>
+        <div className="feature-card">
+          <h3>Sports</h3>
+          <p>Stay updated with sports schedules.</p>
         </div>
       </section>
     </div>

@@ -13,6 +13,7 @@ import SportsSchedules from './pages/SportsSchedules';
 import AdminDashboard from './pages/AdminDashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
+
 import './App.css'; // Keep global styles
 
 function App() {

@@ -1,60 +1,105 @@
-/* src/pages/EventsList.css */
-
-.events-list-container {
+/* Events Page */
+.events-page {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #F5EFE5; /* Matches site background */
-  color: #242938; /* Text color */
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Ensures it doesn't affect the navigation */
-.events-list-container ul {
-  padding: 0;
-  margin: 0;
+/* Header */
+.events-page h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #242938;
+  margin-bottom: 1.5rem;
 }
 
-.events-list {
+/* Events Container */
+.events-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  list-style: none;
-  padding: 0;
+  gap: 2rem;
 }
 
-/* Ensures the menu is not affected */
-.events-list-container .events-menu {
-  display: inline;
-}
-
-/* Event Cards */
+/* Event Card */
 .event-card {
-  background: white;
-  border: 2px solid #242938;
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background: #f5efe5;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
 .event-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  background-color: #e28a21; /* Matches hover style */
+  color: black;
 }
 
-/* Fix button styles */
-.details-button {
-  display: inline-block;
-  background-color: #D9534F;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  text-decoration: none;
+/* Event Details */
+.event-card h3 {
+  color: #242938;
+  margin-bottom: 0.5rem;
+}
+
+.event-card p {
+  color: #333;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.event-category {
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  color: #007bff;
 }
 
-.details-button:hover {
-  background-color: #C9302C;
+.events-list {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.events-list h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #242938;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.event-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-card h3 {
+    color: #242938;
+    margin-bottom: 1rem;
+}
+
+.event-details {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: #666;
+}
+
+.event-details span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }

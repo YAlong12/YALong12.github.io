@@ -1,0 +1,16 @@
+/* Welcome Section */
+.welcome-container {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #F5EFE5;
+}
+
+/* Decorative Border */
+.decorative-border {
+    width: 100%;
+    height: 50px; /* Adjust height if needed */
+    background-image: url('../assets/decorative-border.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}

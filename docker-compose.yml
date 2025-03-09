@@ -1,8 +1,15 @@
 services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
   backend:
     build: ./cassie-backend
     ports:
-      - "3002:3000"  # Example: container's port 3000 mapped to host port 3002
+      - "3002:3002"
     volumes:
       - ./cassie-backend:/app
       - /app/node_modules
@@ -10,6 +17,10 @@ services:
       - ./cassie-backend/.env
     environment:
       - NODE_ENV=development
+      - MONGO_URI=mongodb://mongodb:27017/cassie
+      - PORT=3002
+    depends_on:
+      - mongodb
 
   frontend:
     build: ./cassie-frontend
@@ -23,7 +34,11 @@ services:
       - WDS_SOCKET_PORT=3001
       - WATCHPACK_POLLING=true
       - NODE_OPTIONS=--openssl-legacy-provider
+      - REACT_APP_API_URL=http://localhost:3002
     stdin_open: true
     tty: true
     depends_on:
       - backend
+
+volumes:
+  mongodb_data:

@@ -1,43 +1,60 @@
-import React from 'react';
-import './Home.css';
+import React, { useState, useEffect } from "react";
+import "./EventsList.css";
 
-const Home = () => {
+const EventsList = () => {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      console.log('Fetching events...');
+      const response = await fetch("http://localhost:3002/api/events");
+      console.log('Response:', response);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('Events data:', data);
+      setEvents(data);
+      setLoading(false);
+    } catch (err) {
+      console.error('Error details:', err);
+      setError(`Failed to fetch events: ${err.message}`);
+      setLoading(false);
+    }
+  };
+
+  if (loading) return <div className="events-list">Loading events...</div>;
+  if (error) return <div className="events-list">Error: {error}</div>;
+
   return (
-    <div className="home">
-      <section className="hero">
-        <div className="hero-content">
-          <h1>Welcome to Cassie</h1>
-          <p>Discover and join exciting events in your community</p>
+    <div className="events-list">
+      <h2>Upcoming Events</h2>
+      {events.length === 0 ? (
+        <p>No events available at the moment.</p>
+      ) : (
+        <div className="events-grid">
+          {events.map((event) => (
+            <div key={event._id} className="event-card">
+              <h3>{event.title}</h3>
+              <p>{event.description}</p>
+              <div className="event-details">
+                <span>📅 {new Date(event.date).toLocaleDateString()}</span>
+                <span>📍 {event.location}</span>
+                <span>🏷️ {event.category}</span>
+              </div>
+            </div>
+          ))}
         </div>
-      </section>
-
-      {/* White Background for Feature Cards */}
-      <section className="features-container">
-        <div className="features">
-          <div className="feature-card">
-            <h3>Local Events</h3>
-            <p>Find events happening near you</p>
-          </div>
-          <div className="feature-card">
-            <h3>Activities</h3>
-            <p>Join community activities and programs</p>
-          </div>
-          <div className="feature-card">
-            <h3>Sports</h3>
-            <p>Stay updated with sports schedules</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Background Image Section */}
-      <section className="image-section">
-        <div className="image-overlay">
-          <h2>Experience Gilbert</h2>
-          <p>Explore vibrant events, activities, and more</p>
-        </div>
-      </section>
+      )}
     </div>
   );
 };
 
-export default Home;
+export default EventsList;
