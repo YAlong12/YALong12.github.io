@@ -95,7 +95,27 @@ const EventSchema = new mongoose.Schema({
     updatedAt: {
         type: Date,
         default: Date.now
+    },
+    favorites: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    registeredUsers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
+});
+
+// Add this line to help with debugging
+EventSchema.set('toJSON', {
+    virtuals: true,
+    transform: (doc, ret) => {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+        return ret;
     }
 });
 
-module.exports = mongoose.model('Event', EventSchema);
+const Event = mongoose.model('Event', EventSchema);
+module.exports = Event;

@@ -50,7 +50,7 @@ const Header = () => {
           <nav className="nav-links">
             <Link to="/">Home</Link>
             <Link to="/events">Events</Link>
-            {isAuthenticated && <Link to="/dashboard">Dashboard</Link>}
+            {isAuthenticated && !user?.isAdmin && <Link to="/dashboard">Dashboard</Link>}
             {user?.isAdmin && (
               <>
                 <Link to="/admin">Admin</Link>

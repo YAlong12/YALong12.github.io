@@ -2,12 +2,15 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Event = require('../models/event');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
 // Debug middleware for this route
 router.use((req, res, next) => {
-    console.log('User route:', req.method, req.path);
+    console.log('Users route:', req.method, req.path);
+    console.log('User:', req.user);
     next();
 });
 
@@ -95,6 +98,32 @@ router.post('/login', async (req, res) => {
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ message: 'Server error', error: err.message });
+    }
+});
+
+// Get user's saved events
+router.get('/saved-events', auth, async (req, res) => {
+    try {
+        const events = await Event.find({
+            favorites: req.user.userId
+        }).sort({ startDate: 1 });
+        res.json(events);
+    } catch (err) {
+        console.error('Error fetching saved events:', err);
+        res.status(500).json({ message: 'Error fetching saved events' });
+    }
+});
+
+// Get user's registered events
+router.get('/registered-events', auth, async (req, res) => {
+    try {
+        const events = await Event.find({
+            registeredUsers: req.user.userId
+        }).sort({ startDate: 1 });
+        res.json(events);
+    } catch (err) {
+        console.error('Error fetching registered events:', err);
+        res.status(500).json({ message: 'Error fetching registered events' });
     }
 });
 
