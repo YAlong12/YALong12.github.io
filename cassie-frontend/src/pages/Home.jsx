@@ -69,10 +69,10 @@ const Home = () => {
           <div className="testimonial-content">
             <h2>Community Impact</h2>
             <div className="testimonial-text">
-              "Cassie has transformed how we connect with our community in Gilbert. The platform makes it incredibly easy to discover and participate in local events. It's become an essential part of our town's social fabric."
+              "Cassie has transformed the way my family and I connect with our community in Gilbert. The platform makes it incredibly easy to discover and participate in local events."
             </div>
-            <div className="testimonial-author">Brian Johnson</div>
-            <div className="testimonial-role">Community Organizer, Gilbert Events Board</div>
+            <div className="testimonial-author">Cassie Mortensen</div>
+            <div className="testimonial-role">Mother, Gilbert Resident</div>
           </div>
           <div className="testimonial-image">
             <img src={testimonialImg} alt="Community event in Gilbert" />
