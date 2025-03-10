@@ -161,7 +161,7 @@
 }
 
 .register-button {
-  background-color: #28a745;
+  background-color: #e28a21;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
@@ -176,7 +176,7 @@
 }
 
 .register-button:hover:not(:disabled) {
-  background-color: #218838;
+  background-color: #d17d1b;
   transform: translateY(-2px);
 }
 
@@ -280,7 +280,7 @@
 
 .create-event-button {
   display: inline-block;
-  background-color: #28a745;
+  background-color: #e28a21;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
@@ -290,7 +290,7 @@
 }
 
 .create-event-button:hover {
-  background-color: #218838;
+  background-color: #d17d1b;
 }
 
 .favorite-button {

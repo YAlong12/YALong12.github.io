@@ -249,11 +249,11 @@ const EventsList = () => {
             <div className="events-header">
                 <h1>
                     Community Events
-                    {user?.isAdmin && (
+                    {/* {user?.isAdmin && (
                         <Link to="/events/create" className="create-event-button">
                             Create New Event
                         </Link>
-                    )}
+                    )} */}
                 </h1>
                 
                 <div className="search-filter-section">

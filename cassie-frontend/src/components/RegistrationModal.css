@@ -108,7 +108,7 @@
 }
 
 .submit-button {
-    background-color: #28a745;
+    background-color: #e28a21;
     color: white;
     flex: 2;
 }
@@ -118,7 +118,7 @@
 }
 
 .submit-button:hover:not(:disabled) {
-    background-color: #218838;
+    background-color: #d17d1b;
 }
 
 .submit-button:disabled {
