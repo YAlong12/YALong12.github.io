@@ -18,16 +18,16 @@ import healthImg from '../assets/health.jpg';
 import educationImg from '../assets/education.jpg';
 
 const eventCategories = [
-  { title: 'Community Gatherings', img: communityImg, link: '/events?category=community' },
-  { title: 'Workshops & Classes', img: workshopsImg, link: '/events?category=workshops' },
-  { title: 'Entertainment & Arts', img: entertainmentImg, link: '/events?category=entertainment' },
-  { title: 'Sports & Recreation', img: sportsImg, link: '/events?category=sports' },
-  { title: 'Networking & Business', img: networkingImg, link: '/events?category=networking' },
-  { title: 'Volunteer & Charity', img: volunteerImg, link: '/events?category=volunteer' },
-  { title: 'Family & Kids', img: familyImg, link: '/events?category=family' },
-  { title: 'Food & Drink', img: foodImg, link: '/events?category=food' },
-  { title: 'Health & Wellness', img: healthImg, link: '/events?category=health' },
-  { title: 'Education & Talks', img: educationImg, link: '/events?category=education' }
+  { title: 'Community Gatherings', img: communityImg, link: '/events?category=Community Gatherings' },
+  { title: 'Workshops & Classes', img: workshopsImg, link: '/events?category=Workshops & Classes' },
+  { title: 'Entertainment & Arts', img: entertainmentImg, link: '/events?category=Entertainment & Arts' },
+  { title: 'Sports & Recreation', img: sportsImg, link: '/events?category=Sports & Recreation' },
+  { title: 'Networking & Business', img: networkingImg, link: '/events?category=Networking & Business' },
+  { title: 'Volunteer & Charity', img: volunteerImg, link: '/events?category=Volunteer & Charity' },
+  { title: 'Family & Kids', img: familyImg, link: '/events?category=Family & Kids' },
+  { title: 'Food & Drink', img: foodImg, link: '/events?category=Food & Drink' },
+  { title: 'Health & Wellness', img: healthImg, link: '/events?category=Health & Wellness' },
+  { title: 'Education & Talks', img: educationImg, link: '/events?category=Education & Talks' }
 ];
 
 const Home = () => {

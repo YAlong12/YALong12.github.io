@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import './EventsList.css';
 import { fetchWithAuth } from '../utils/api';
 import RegistrationModal from '../components/RegistrationModal';
@@ -10,6 +10,7 @@ import defaultEventImage from '../assets/default-event.jpg';
 const EventsList = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -53,6 +54,19 @@ const EventsList = () => {
 
         loadUserData();
     }, [user]);
+
+    useEffect(() => {
+        // Get category from URL parameters
+        const categoryFromUrl = searchParams.get('category');
+        console.log('Category from URL:', categoryFromUrl);
+        if (categoryFromUrl) {
+            setFilter(prev => ({
+                ...prev,
+                category: categoryFromUrl
+            }));
+            console.log('Setting filter to:', categoryFromUrl);
+        }
+    }, [searchParams]);
 
     const fetchEvents = async () => {
         try {
@@ -200,15 +214,26 @@ const EventsList = () => {
     };
 
     const filteredEvents = events.filter(event => {
+        console.log('Event category:', event.category);
+        console.log('Filter category:', filter.category);
+        
+        // Filter by search term
         const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            event.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            event.location.toLowerCase().includes(searchTerm.toLowerCase());
+            event.location.toLowerCase().includes(searchTerm.toLowerCase());
 
-        const matchesDepartment = !filter.department || event.department === filter.department;
+        // Filter by category
         const matchesCategory = !filter.category || event.category === filter.category;
+
+        // Filter by department
+        const matchesDepartment = !filter.department || event.department === filter.department;
+
+        // Filter by age group
         const matchesAgeGroup = !filter.ageGroup || event.ageGroup === filter.ageGroup;
 
-        return matchesSearch && matchesDepartment && matchesCategory && matchesAgeGroup;
+        // Filter by date (if implemented)
+        const matchesDate = !filter.date || event.startDate === filter.date;
+
+        return matchesSearch && matchesCategory && matchesDepartment && matchesAgeGroup && matchesDate;
     });
 
     if (loading) return <div className="events-loading">Loading events...</div>;
@@ -249,13 +274,11 @@ const EventsList = () => {
                                 onChange={(e) => setFilter({...filter, department: e.target.value})}
                             >
                                 <option value="">All Departments</option>
-                                <option value="Parks and Recreation">Parks and Recreation</option>
-                                <option value="Police Department">Police Department</option>
-                                <option value="Fire Department">Fire Department</option>
+                                <option value="Parks & Recreation">Parks & Recreation</option>
+                                <option value="Library">Library</option>
+                                <option value="Police">Police</option>
+                                <option value="Fire">Fire</option>
                                 <option value="Community Services">Community Services</option>
-                                <option value="Development Services">Development Services</option>
-                                <option value="Public Works">Public Works</option>
-                                <option value="Water Department">Water Department</option>
                             </select>
                         </div>
 
@@ -266,15 +289,16 @@ const EventsList = () => {
                                 onChange={(e) => setFilter({...filter, category: e.target.value})}
                             >
                                 <option value="">All Categories</option>
-                                <option value="Arts & Culture">Arts & Culture</option>
-                                <option value="Classes & Programs">Classes & Programs</option>
-                                <option value="Community">Community</option>
-                                <option value="Council & Boards">Council & Boards</option>
-                                <option value="Parks & Recreation">Parks & Recreation</option>
-                                <option value="Public Safety">Public Safety</option>
-                                <option value="Senior Activities">Senior Activities</option>
-                                <option value="Special Events">Special Events</option>
-                                <option value="Youth Programs">Youth Programs</option>
+                                <option value="Community Gatherings">Community Gatherings</option>
+                                <option value="Workshops & Classes">Workshops & Classes</option>
+                                <option value="Entertainment & Arts">Entertainment & Arts</option>
+                                <option value="Sports & Recreation">Sports & Recreation</option>
+                                <option value="Networking & Business">Networking & Business</option>
+                                <option value="Volunteer & Charity">Volunteer & Charity</option>
+                                <option value="Family & Kids">Family & Kids</option>
+                                <option value="Food & Drink">Food & Drink</option>
+                                <option value="Health & Wellness">Health & Wellness</option>
+                                <option value="Education & Talks">Education & Talks</option>
                             </select>
                         </div>
 

@@ -13,6 +13,9 @@ import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 import CreateEvent from './pages/CreateEvent';
 import PageTransition from './components/PageTransition';
+import AboutUs from './pages/AboutUs';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 import './App.css'; // Keep global styles
 
@@ -44,6 +47,9 @@ const AppContent = () => {
                             </ProtectedRoute>
                         } 
                     />
+                    <Route path="/about" element={<AboutUs />} />
+                    <Route path="/privacy" element={<PrivacyPolicy />} />
+                    <Route path="/terms" element={<TermsOfService />} />
                 </Routes>
             </PageTransition>
             <Footer />
