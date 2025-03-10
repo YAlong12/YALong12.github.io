@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
 function Register() {
@@ -11,6 +12,7 @@ function Register() {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const { email, password, confirmPassword } = formData;
 
@@ -20,6 +22,7 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         setError('');
 
         // Validate passwords match
@@ -28,37 +31,31 @@ function Register() {
             return;
         }
 
-        setIsLoading(true);
-
         try {
             const response = await fetch('http://localhost:3002/api/users/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify(formData),
             });
 
             const data = await response.json();
-            console.log('Register response:', data);
 
             if (!response.ok) {
                 throw new Error(data.message || 'Registration failed');
             }
 
-            if (data.token) {
-                // Store the token and user info
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('userId', data.userId);
-
-                // Redirect to dashboard
-                navigate('/dashboard');
-            } else {
-                throw new Error('No token received from server');
-            }
+            // Store the token and update auth context
+            localStorage.setItem('token', data.token);
+            login(data);
+            
+            // Redirect to home page
+            navigate('/');
+            
         } catch (err) {
             console.error('Registration error:', err);
-            setError(err.message || 'An error occurred during registration');
+            setError(err.message || 'Registration failed');
         } finally {
             setIsLoading(false);
         }

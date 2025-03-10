@@ -18,16 +18,16 @@ import healthImg from '../assets/health.jpg';
 import educationImg from '../assets/education.jpg';
 
 const eventCategories = [
-  { title: 'Community Gatherings', img: communityImg, description: 'Festivals, town hall meetings, block parties', link: '/events?category=community' },
-  { title: 'Workshops & Classes', img: workshopsImg, description: 'Art, coding, fitness, cooking, and more', link: '/events?category=workshops' },
-  { title: 'Entertainment & Arts', img: entertainmentImg, description: 'Concerts, theater, movie nights, comedy shows', link: '/events?category=entertainment' },
-  { title: 'Sports & Recreation', img: sportsImg, description: 'Local leagues, yoga in the park, group hikes', link: '/events?category=sports' },
-  { title: 'Networking & Business', img: networkingImg, description: 'Meetups, conferences, career fairs', link: '/events?category=networking' },
-  { title: 'Volunteer & Charity', img: volunteerImg, description: 'Fundraisers, clean-ups, donation drives', link: '/events?category=volunteer' },
-  { title: 'Family & Kids', img: familyImg, description: 'Storytime, kids activities, family fun days', link: '/events?category=family' },
-  { title: 'Food & Drink', img: foodImg, description: 'Farmers markets, food festivals, wine tastings', link: '/events?category=food' },
-  { title: 'Health & Wellness', img: healthImg, description: 'Meditation, health fairs, fitness challenges', link: '/events?category=health' },
-  { title: 'Education & Talks', img: educationImg, description: 'Lectures, book clubs, panel discussions', link: '/events?category=education' }
+  { title: 'Community Gatherings', img: communityImg, link: '/events?category=community' },
+  { title: 'Workshops & Classes', img: workshopsImg, link: '/events?category=workshops' },
+  { title: 'Entertainment & Arts', img: entertainmentImg, link: '/events?category=entertainment' },
+  { title: 'Sports & Recreation', img: sportsImg, link: '/events?category=sports' },
+  { title: 'Networking & Business', img: networkingImg, link: '/events?category=networking' },
+  { title: 'Volunteer & Charity', img: volunteerImg, link: '/events?category=volunteer' },
+  { title: 'Family & Kids', img: familyImg, link: '/events?category=family' },
+  { title: 'Food & Drink', img: foodImg, link: '/events?category=food' },
+  { title: 'Health & Wellness', img: healthImg, link: '/events?category=health' },
+  { title: 'Education & Talks', img: educationImg, link: '/events?category=education' }
 ];
 
 const Home = () => {
@@ -62,7 +62,6 @@ const Home = () => {
               <img src={category.img} alt={category.title} />
               <div className="category-info">
                 <h3>{category.title}</h3>
-                <p>{category.description}</p>
               </div>
             </Link>
           ))}

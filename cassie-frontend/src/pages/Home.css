@@ -155,13 +155,8 @@
 
 .category-info h3 {
     font-size: 1.1rem;
-    margin-bottom: 0.25rem;
-}
-
-.category-info p {
-    font-size: 0.85rem;
-    opacity: 0.8;
-    line-height: 1.2;
+    margin: 0;
+    text-align: center;
 }
 
 /* Add testimonial section styles */
