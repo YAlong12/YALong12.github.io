@@ -59,41 +59,32 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log('Login attempt:', { email });
-
-        if (!email || !password) {
-            console.log('Missing email or password');
-            return res.status(400).json({ message: 'Email and password are required' });
-        }
+        console.log('Login attempt for:', email);
 
         // Find user
         const user = await User.findOne({ email });
-        console.log('User found:', user ? 'Yes' : 'No');
-        console.log('User details:', user);
-
         if (!user) {
-            console.log('No user found with email:', email);
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
         // Check password
-        const isMatch = await bcrypt.compare(password, user.password);
-        console.log('Password match:', isMatch ? 'Yes' : 'No');
-
+        const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            console.log('Password does not match for user:', email);
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
-        // Create token
+        // Create token with user ID and admin status
         const token = jwt.sign(
-            { userId: user._id, isAdmin: user.isAdmin },
+            { 
+                userId: user._id,
+                isAdmin: user.isAdmin 
+            },
             process.env.JWT_SECRET,
             { expiresIn: '5h' }
         );
 
-        console.log('Login successful for:', email);
-        
+        console.log('Login successful for:', email, 'isAdmin:', user.isAdmin);
+
         // Send response
         res.json({
             token,

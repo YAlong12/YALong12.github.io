@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
+import { useAuth } from '../context/AuthContext';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -8,8 +9,7 @@ function Login() {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from || '/';
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,10 +38,8 @@ function Login() {
                 throw new Error(data.message || 'Login failed');
             }
 
-            // Store the token and user info
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('userId', data.userId);
-            localStorage.setItem('isAdmin', data.isAdmin);
+            // Use the login function from context
+            login(data);
 
             // Navigate to dashboard
             navigate('/dashboard');
