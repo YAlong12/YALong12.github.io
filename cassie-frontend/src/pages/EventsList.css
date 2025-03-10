@@ -122,11 +122,12 @@
     border: 1px solid #eef0f2;
     display: flex;
     flex-direction: column;
-    height: 320px; /* Fixed height to accommodate all content */
+    height: 100%;
 }
 
 .event-card:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 /* Event Image */
@@ -145,6 +146,10 @@
     justify-content: space-between;
 }
 
+.event-info {
+    flex-grow: 1;
+}
+
 .event-date {
     font-size: 0.8rem;
     color: #666;
@@ -152,14 +157,14 @@
 }
 
 .event-title {
-    font-size: 1rem;
-    font-weight: 600;
     color: #242938;
-    margin-bottom: 0.5rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+}
+
+.event-title:hover {
+    color: #e28a21;
 }
 
 .event-location {
@@ -177,35 +182,45 @@
     color: #242938;
 }
 
-/* Action Buttons */
+/* Event Actions */
 .event-actions {
     display: flex;
     gap: 0.5rem;
-    margin-top: auto;
-    padding-top: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
     border-top: 1px solid #eef0f2;
 }
 
-.view-details-button,
-.buy-tickets-button {
-    padding: 0.35rem 0.75rem;
+.view-details-button {
+    flex: 2; /* Give more space to the details button */
+    padding: 0.75rem;
+    background-color: #e28a21;
+    color: white;
+    border: none;
     border-radius: 6px;
-    font-size: 0.8rem;
     font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.view-details-button:hover {
+    background-color: #d17d1b;
+}
+
+.unregister-button {
     flex: 1;
-}
-
-.view-details-button {
-    background: #f5f6f7;
-    border: 1px solid #eef0f2;
-    color: #242938;
-}
-
-.buy-tickets-button {
-    background: #e28a21;
-    border: none;
+    padding: 0.75rem;
+    background-color: #dc3545;
     color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.unregister-button:hover {
+    background-color: #c82333;
 }
 
 .event-registration {
@@ -213,26 +228,6 @@
   padding: 1rem;
   background-color: #f8f9fa;
   border-radius: 4px;
-}
-
-.register-button {
-  background-color: #e28a21;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.register-button:hover:not(:disabled) {
-  background-color: #d17d1b;
-  transform: translateY(-2px);
 }
 
 .register-button:disabled {
@@ -307,12 +302,6 @@
   color: #666;
   background-color: #f8f9fa;
   border-radius: 4px;
-}
-
-.event-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 }
 
 .admin-controls {
@@ -477,4 +466,143 @@
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+.event-details-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 2rem;
+}
+
+.event-details-modal {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: white;
+    border: none;
+    font-size: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.event-details-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.event-details-content {
+    padding: 2rem;
+}
+
+.event-details-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.info-item {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.info-item .label {
+    font-weight: 600;
+    color: #666;
+}
+
+.event-description {
+    margin: 2rem 0;
+}
+
+.event-description h2 {
+    color: #242938;
+    margin-bottom: 1rem;
+}
+
+.event-registration-actions {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eef0f2;
+    display: flex;
+    gap: 1rem;
+}
+
+.registration-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+}
+
+.registration-modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-feedback {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    color: white;
+    z-index: 2000;
+    animation: slideIn 0.3s ease;
+}
+
+.action-feedback.success {
+    background-color: #28a745;
+}
+
+.action-feedback.error {
+    background-color: #dc3545;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }

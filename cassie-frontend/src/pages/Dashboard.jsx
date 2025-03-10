@@ -63,30 +63,32 @@ const Dashboard = () => {
         }
     };
 
-    const handleUnregister = (event) => {
-        const eventId = event._id || event.id;
-        if (!eventId) {
-            console.error('No event ID provided', event);
+    const handleUnregister = async (eventId) => {
+        try {
+            await fetchWithAuth(`/events/${eventId}/unregister`, {
+                method: 'DELETE'
+            });
+
+            // Remove event from registered events
+            setRegisteredEvents(prevEvents => 
+                prevEvents.filter(event => (event.id || event._id) !== eventId)
+            );
+
             setActionFeedback({
-                message: (
-                    <div className="feedback-content">
-                        <span className="feedback-icon">×</span>
-                        <div className="feedback-text">
-                            <strong>Unregistration Failed</strong>
-                            <span>Please try again</span>
-                        </div>
-                    </div>
-                ),
+                message: 'Successfully unregistered from event',
+                type: 'success'
+            });
+
+            setTimeout(() => {
+                setActionFeedback({ message: '', type: '' });
+            }, 3000);
+        } catch (err) {
+            console.error('Error unregistering:', err);
+            setActionFeedback({
+                message: 'Failed to unregister from event',
                 type: 'error'
             });
-            return;
         }
-
-        setDialogState({
-            isOpen: true,
-            eventId,
-            eventTitle: event.title || 'this event'
-        });
     };
 
     const handleConfirmUnregister = async () => {
@@ -153,7 +155,7 @@ const Dashboard = () => {
         }
 
         return registeredEvents.map(event => (
-            <div key={event._id || event.id} className="event-card">
+            <div key={event.id || event._id} className="event-card">
                 <div className="event-header">
                     <h3>{event.title}</h3>
                     <span className="event-category">{event.category}</span>
@@ -170,15 +172,19 @@ const Dashboard = () => {
                             {event.contactInfo.email && <p><strong>Email:</strong> {event.contactInfo.email}</p>}
                         </div>
                     )}
-                    <div className="registration-status">
+                    <div className="event-actions">
                         <button 
-                            onClick={() => handleUnregister(event)}
-                            className="unregister-button"
+                            className="view-details-button"
+                            onClick={() => handleViewDetails(event)}
                         >
-                            <span className="unregister-icon">↩</span>
-                            <span className="unregister-text">Unregister</span>
+                            Details
                         </button>
-                        <span className="registered-badge">✓ Registered</span>
+                        <button 
+                            className="unregister-button"
+                            onClick={() => handleUnregister(event.id || event._id)}
+                        >
+                            Unregister
+                        </button>
                     </div>
                 </div>
             </div>

@@ -75,7 +75,11 @@
 }
 
 .event-actions {
-    display: none;
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eef0f2;
 }
 
 .no-events {
@@ -163,23 +167,19 @@
 }
 
 .unregister-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: #f8f9fa;
-    color: #dc3545;
-    border: 1px solid #dc3545;
-    padding: 0.5rem 1rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
     border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
     font-weight: 500;
-    transition: all 0.2s ease;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .unregister-button:hover {
-    background-color: #dc3545;
-    color: white;
+    background-color: #c82333;
 }
 
 .unregister-icon {

@@ -26,8 +26,23 @@ const EventsList = () => {
     const [actionFeedback, setActionFeedback] = useState({ message: '', type: '' });
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isRegistering, setIsRegistering] = useState(false);
+    const [selectedEventDetails, setSelectedEventDetails] = useState(null);
+    const [showRegistrationModal, setShowRegistrationModal] = useState(false);
 
     useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const data = await fetchWithAuth('/events');
+                console.log('Fetched events:', data);
+                setEvents(data);
+            } catch (err) {
+                setError('Failed to load events');
+                console.error('Error fetching events:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchEvents();
     }, []);
 
@@ -56,6 +71,11 @@ const EventsList = () => {
     }, [user]);
 
     useEffect(() => {
+        console.log('Current userRegistrations:', userRegistrations);
+        console.log('Current events:', events);
+    }, [userRegistrations, events]);
+
+    useEffect(() => {
         // Get category from URL parameters
         const categoryFromUrl = searchParams.get('category');
         console.log('Category from URL:', categoryFromUrl);
@@ -67,18 +87,6 @@ const EventsList = () => {
             console.log('Setting filter to:', categoryFromUrl);
         }
     }, [searchParams]);
-
-    const fetchEvents = async () => {
-        try {
-            const data = await fetchWithAuth('/events');
-            setEvents(data);
-        } catch (err) {
-            setError('Failed to load events');
-            console.error('Error fetching events:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const handleDelete = async (eventId) => {
         if (!window.confirm('Are you sure you want to delete this event?')) return;
@@ -108,79 +116,127 @@ const EventsList = () => {
         }
 
         try {
-            const response = await fetchWithAuth(`/events/${eventId}/favorite`, {
-                method: 'POST'
-            });
+            // Get the event ID, checking both id and _id properties
+            const id = eventId || event.id;
+            console.log('Event ID:', id);
 
-            if (response.isFavorited) {
-                setUserFavorites(prev => new Set([...prev, eventId]));
+            // Make sure we have a valid eventId
+            if (!id) {
+                console.error('No event ID provided');
                 setActionFeedback({ 
-                    message: 'Event added to favorites!', 
-                    type: 'success' 
+                    message: 'Could not favorite event: Invalid event ID', 
+                    type: 'error' 
                 });
-            } else {
-                setUserFavorites(prev => {
-                    const newFavorites = new Set(prev);
-                    newFavorites.delete(eventId);
-                    return newFavorites;
-                });
-                setActionFeedback({ 
-                    message: 'Event removed from favorites', 
-                    type: 'info' 
-                });
+                return;
             }
 
-            setTimeout(() => setActionFeedback({ message: '', type: '' }), 3000);
+            const response = await fetchWithAuth(`/events/${id}/favorite`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log('Favorite response:', response);
+
+            if (response.isFavorited !== undefined) {
+                if (response.isFavorited) {
+                    setUserFavorites(prev => new Set([...prev, id]));
+                    setActionFeedback({ 
+                        message: 'Event added to favorites!', 
+                        type: 'success' 
+                    });
+                } else {
+                    setUserFavorites(prev => {
+                        const newFavorites = new Set(prev);
+                        newFavorites.delete(id);
+                        return newFavorites;
+                    });
+                    setActionFeedback({ 
+                        message: 'Event removed from favorites', 
+                        type: 'info' 
+                    });
+                }
+            }
         } catch (err) {
             console.error('Error favoriting event:', err);
             setActionFeedback({ 
-                message: err.message || 'Failed to update favorites', 
+                message: 'Failed to update favorites', 
                 type: 'error' 
             });
         }
     };
 
-    const handleRegister = async (eventId) => {
+    const handleRegister = (eventId) => {
+        if (!user) {
+            navigate('/login');
+            return;
+        }
+        setSelectedEvent(selectedEventDetails);
+        setShowRegistrationModal(true);
+    };
+
+    const handleRegistrationSubmit = async (formData) => {
+        setIsRegistering(true);
+        try {
+            await fetchWithAuth(`/events/${selectedEvent.id || selectedEvent._id}/register`, {
+                method: 'POST',
+                body: JSON.stringify(formData)
+            });
+            
+            setUserRegistrations(prev => new Set([...prev, selectedEvent.id || selectedEvent._id]));
+            
+            setSelectedEvent(null);
+            setSelectedEventDetails(null);
+            setShowRegistrationModal(false);
+            setIsRegistering(false);
+            
+            setActionFeedback({
+                message: 'Successfully registered for event!',
+                type: 'success'
+            });
+            
+            setTimeout(() => {
+                setActionFeedback({ message: '', type: '' });
+            }, 3000);
+        } catch (err) {
+            console.error('Error registering:', err);
+            setActionFeedback({
+                message: 'Failed to register for event',
+                type: 'error'
+            });
+            setIsRegistering(false);
+        }
+    };
+
+    const handleUnregister = async (eventId) => {
         if (!user) {
             navigate('/login');
             return;
         }
 
-        const event = events.find(e => (e.id || e._id) === eventId);
-        if (!event) {
-            setActionFeedback({
-                message: 'Event not found',
-                type: 'error'
-            });
-            return;
-        }
-
-        setSelectedEvent(event);
-    };
-
-    const handleRegistrationSubmit = async (formData) => {
         try {
-            setIsRegistering(true);
-            const response = await fetchWithAuth(`/events/${selectedEvent.id || selectedEvent._id}/register`, {
-                method: 'POST',
-                body: JSON.stringify(formData)
+            const response = await fetchWithAuth(`/events/${eventId}/unregister`, {
+                method: 'POST'
             });
 
-            if (response.isRegistered) {
-                setUserRegistrations(prev => new Set([...prev, selectedEvent.id || selectedEvent._id]));
+            if (response.success) {
+                setUserRegistrations(prev => {
+                    const newRegistrations = new Set(prev);
+                    newRegistrations.delete(eventId);
+                    return newRegistrations;
+                });
                 setActionFeedback({
-                    message: 'Successfully registered for event!',
+                    message: 'Successfully unregistered from event',
                     type: 'success'
                 });
-                setSelectedEvent(null);
             }
         } catch (err) {
+            console.error('Error unregistering:', err);
             setActionFeedback({
-                message: err.message || 'Failed to register for event',
+                message: 'Failed to unregister from event',
                 type: 'error'
             });
-        } finally {
-            setIsRegistering(false);
         }
     };
 
@@ -235,6 +291,14 @@ const EventsList = () => {
 
         return matchesSearch && matchesCategory && matchesDepartment && matchesAgeGroup && matchesDate;
     });
+
+    const handleViewDetails = (event) => {
+        setSelectedEventDetails(event);
+    };
+
+    const handleCloseDetails = () => {
+        setSelectedEventDetails(null);
+    };
 
     if (loading) return <div className="events-loading">Loading events...</div>;
     if (error) return <div className="events-error">{error}</div>;
@@ -323,30 +387,26 @@ const EventsList = () => {
 
             <div className="events-grid">
                 {filteredEvents.map(event => (
-                    <div key={event._id} className="event-card">
+                    <div key={event.id || event._id} className="event-card">
                         <img 
                             src={event.imageUrl || defaultEventImage} 
                             alt={event.title}
                             className="event-image"
                             onError={(e) => {
                                 e.target.src = defaultEventImage;
-                                e.target.onerror = null; // Prevent infinite loop
+                                e.target.onerror = null;
                             }}
+                            onClick={() => handleViewDetails(event)}
+                            style={{ cursor: 'pointer' }}
                         />
-                        {user && !user.isAdmin && (
-                            <button 
-                                className={`favorite-button ${userFavorites.has(event._id) ? 'favorited' : ''}`}
-                                onClick={() => handleFavorite(event._id)}
-                            >
-                                {userFavorites.has(event._id) ? '❤️' : '🤍'}
-                            </button>
-                        )}
                         <div className="event-content">
-                            <div>
+                            <div className="event-info">
                                 <div className="event-date">
                                     {formatDate(event.startDate, event.startTime)}
                                 </div>
-                                <h3 className="event-title">{event.title}</h3>
+                                <h3 className="event-title" onClick={() => handleViewDetails(event)} style={{ cursor: 'pointer' }}>
+                                    {event.title}
+                                </h3>
                                 <div className="event-location">
                                     📍 {event.location}
                                 </div>
@@ -354,24 +414,116 @@ const EventsList = () => {
                                     {event.cost || 'Free'}
                                 </div>
                             </div>
+                            
                             <div className="event-actions">
-                                <button className="view-details-button">Details</button>
-                                <button className="buy-tickets-button">
-                                    {event.registrationRequired ? 'Register' : 'Join'}
+                                <button 
+                                    className="view-details-button"
+                                    onClick={() => handleViewDetails(event)}
+                                >
+                                    View Details
                                 </button>
+                                {user && !user.isAdmin && userRegistrations.has(event.id || event._id) && (
+                                    <button 
+                                        className="unregister-button"
+                                        onClick={() => handleUnregister(event.id || event._id)}
+                                    >
+                                        Unregister
+                                    </button>
+                                )}
                             </div>
                         </div>
+                        {user && !user.isAdmin && (
+                            <button 
+                                className={`favorite-button ${userFavorites.has(event.id || event._id) ? 'favorited' : ''}`}
+                                onClick={() => handleFavorite(event.id || event._id)}
+                            >
+                                {userFavorites.has(event.id || event._id) ? '❤️' : '🤍'}
+                            </button>
+                        )}
                     </div>
                 ))}
             </div>
 
-            {selectedEvent && (
-                <RegistrationModal
-                    event={selectedEvent}
-                    onClose={() => setSelectedEvent(null)}
-                    onSubmit={handleRegistrationSubmit}
-                    isLoading={isRegistering}
-                />
+            {selectedEventDetails && (
+                <div className="event-details-overlay">
+                    <div className="event-details-modal">
+                        <button className="close-button" onClick={handleCloseDetails}>×</button>
+                        <img 
+                            src={selectedEventDetails.imageUrl || defaultEventImage}
+                            alt={selectedEventDetails.title}
+                            className="event-details-image"
+                            onError={(e) => {
+                                e.target.src = defaultEventImage;
+                                e.target.onerror = null;
+                            }}
+                        />
+                        
+                        <div className="event-details-content">
+                            <h1>{selectedEventDetails.title}</h1>
+                            
+                            <div className="event-details-info">
+                                <div className="info-item">
+                                    <span className="label">Date & Time:</span>
+                                    <span>{formatDate(selectedEventDetails.startDate, selectedEventDetails.startTime)}</span>
+                                </div>
+                                <div className="info-item">
+                                    <span className="label">Location:</span>
+                                    <span>{selectedEventDetails.location}</span>
+                                </div>
+                                <div className="info-item">
+                                    <span className="label">Department:</span>
+                                    <span>{selectedEventDetails.department}</span>
+                                </div>
+                                <div className="info-item">
+                                    <span className="label">Category:</span>
+                                    <span>{selectedEventDetails.category}</span>
+                                </div>
+                                <div className="info-item">
+                                    <span className="label">Cost:</span>
+                                    <span>{selectedEventDetails.cost || 'Free'}</span>
+                                </div>
+                            </div>
+
+                            <div className="event-description">
+                                <h2>Description</h2>
+                                <p>{selectedEventDetails.description}</p>
+                            </div>
+
+                            {user && !user.isAdmin && (
+                                <div className="event-registration-actions">
+                                    {userRegistrations.has(selectedEventDetails.id || selectedEventDetails._id) ? (
+                                        <button 
+                                            className="unregister-button"
+                                            onClick={() => handleUnregister(selectedEventDetails.id || selectedEventDetails._id)}
+                                        >
+                                            Unregister
+                                        </button>
+                                    ) : (
+                                        <button 
+                                            className="register-button"
+                                            onClick={() => handleRegister(selectedEventDetails.id || selectedEventDetails._id)}
+                                        >
+                                            Register Now
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+
+                        {showRegistrationModal && (
+                            <div className="registration-modal-overlay">
+                                <div className="registration-modal">
+                                    <RegistrationModal
+                                        event={selectedEvent}
+                                        onClose={() => setShowRegistrationModal(false)}
+                                        onSubmit={handleRegistrationSubmit}
+                                        isLoading={isRegistering}
+                                    />
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
             )}
         </div>
     );

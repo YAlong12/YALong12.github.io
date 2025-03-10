@@ -1,7 +1,6 @@
 // src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import { TransitionGroup } from 'react-transition-group';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -13,11 +12,8 @@ import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 import CreateEvent from './pages/CreateEvent';
 import PageTransition from './components/PageTransition';
-import AboutUs from './pages/AboutUs';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfService from './pages/TermsOfService';
 
-import './App.css'; // Keep global styles
+import './App.css';
 
 const AppContent = () => {
     const location = useLocation();
@@ -47,9 +43,6 @@ const AppContent = () => {
                             </ProtectedRoute>
                         } 
                     />
-                    <Route path="/about" element={<AboutUs />} />
-                    <Route path="/privacy" element={<PrivacyPolicy />} />
-                    <Route path="/terms" element={<TermsOfService />} />
                 </Routes>
             </PageTransition>
             <Footer />
