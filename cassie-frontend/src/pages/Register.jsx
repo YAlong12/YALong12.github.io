@@ -40,6 +40,7 @@ function Register() {
             });
 
             const data = await response.json();
+            console.log('Register response:', data);
 
             if (!response.ok) {
                 throw new Error(data.message || 'Registration failed');

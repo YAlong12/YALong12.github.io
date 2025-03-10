@@ -17,15 +17,22 @@ function Login() {
         setIsLoading(true);
 
         try {
+            console.log('Attempting login with:', { email });
+
             const response = await fetch('http://localhost:3002/api/users/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ 
+                    email: email.trim(), 
+                    password 
+                })
             });
 
+            console.log('Response status:', response.status);
             const data = await response.json();
+            console.log('Server response:', data);
 
             if (!response.ok) {
                 throw new Error(data.message || 'Login failed');
@@ -36,9 +43,10 @@ function Login() {
             localStorage.setItem('userId', data.userId);
             localStorage.setItem('isAdmin', data.isAdmin);
 
-            // Navigate to the previous page or dashboard
-            navigate(from, { replace: true });
+            // Navigate to dashboard
+            navigate('/dashboard');
         } catch (err) {
+            console.error('Login error:', err);
             setError(err.message || 'An error occurred during login');
         } finally {
             setIsLoading(false);

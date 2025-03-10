@@ -1,64 +1,110 @@
 const express = require('express');
-const router = express.Router();
-const User = require('../models/User');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
-// Register
+const router = express.Router();
+
+// Debug middleware for this route
+router.use((req, res, next) => {
+    console.log('User route:', req.method, req.path);
+    next();
+});
+
+// Register route
 router.post('/register', async (req, res) => {
     try {
-        const { username, email, password } = req.body;
-        
+        const { email, password } = req.body;
+        console.log('Register attempt for:', email); // Add logging
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Please provide both email and password' });
+        }
+
         // Check if user already exists
-        const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-        if (existingUser) {
+        let user = await User.findOne({ email });
+        if (user) {
             return res.status(400).json({ message: 'User already exists' });
         }
 
         // Create new user
-        const user = new User({ username, email, password });
-        await user.save();
+        user = new User({
+            email,
+            password // Password will be hashed by the pre-save middleware
+        });
 
-        // Generate token
+        await user.save();
+        console.log('User created:', email); // Add logging
+
+        // Create token
         const token = jwt.sign(
-            { userId: user._id },
-            process.env.JWT_SECRET || 'supersecretkey',
-            { expiresIn: '24h' }
+            { userId: user._id, isAdmin: user.isAdmin },
+            process.env.JWT_SECRET,
+            { expiresIn: '5h' }
         );
 
-        res.status(201).json({ token, userId: user._id });
-    } catch (error) {
-        res.status(500).json({ message: 'Error creating user', error: error.message });
+        res.status(201).json({ 
+            token, 
+            userId: user._id,
+            isAdmin: user.isAdmin 
+        });
+
+    } catch (err) {
+        console.error('Registration error:', err);
+        res.status(500).json({ message: 'Error creating user', error: err.message });
     }
 });
 
-// Login
+// Login route
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        
+        console.log('Login attempt:', { email });
+
+        if (!email || !password) {
+            console.log('Missing email or password');
+            return res.status(400).json({ message: 'Email and password are required' });
+        }
+
         // Find user
         const user = await User.findOne({ email });
+        console.log('User found:', user ? 'Yes' : 'No');
+        console.log('User details:', user);
+
         if (!user) {
+            console.log('No user found with email:', email);
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
         // Check password
-        const isMatch = await user.comparePassword(password);
+        const isMatch = await bcrypt.compare(password, user.password);
+        console.log('Password match:', isMatch ? 'Yes' : 'No');
+
         if (!isMatch) {
+            console.log('Password does not match for user:', email);
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
-        // Generate token
+        // Create token
         const token = jwt.sign(
-            { userId: user._id },
-            process.env.JWT_SECRET || 'supersecretkey',
-            { expiresIn: '24h' }
+            { userId: user._id, isAdmin: user.isAdmin },
+            process.env.JWT_SECRET,
+            { expiresIn: '5h' }
         );
 
-        res.json({ token, userId: user._id });
-    } catch (error) {
-        res.status(500).json({ message: 'Error logging in', error: error.message });
+        console.log('Login successful for:', email);
+        
+        // Send response
+        res.json({
+            token,
+            userId: user._id,
+            isAdmin: user.isAdmin
+        });
+
+    } catch (err) {
+        console.error('Login error:', err);
+        res.status(500).json({ message: 'Server error', error: err.message });
     }
 });
 
-module.exports = router; 
+module.exports = router;
