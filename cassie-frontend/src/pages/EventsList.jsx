@@ -39,8 +39,8 @@ const EventsList = () => {
                     fetchWithAuth('/users/registered-events')
                 ]);
 
-                setUserFavorites(new Set(savedResponse.map(event => event.id || event._id)));
-                setUserRegistrations(new Set(registeredResponse.map(event => event.id || event._id)));
+                setUserFavorites(new Set(savedResponse.map(event => event._id)));
+                setUserRegistrations(new Set(registeredResponse.map(event => event._id)));
             } catch (err) {
                 console.error('Error loading user data:', err);
                 setActionFeedback({
@@ -93,53 +93,27 @@ const EventsList = () => {
         }
 
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                throw new Error('No authentication token found');
-            }
-
-            console.log('Attempting to favorite event:', eventId);
-
-            // Make sure we're using the correct ID
-            const id = eventId?.id || eventId?._id || eventId;
-            if (!id) {
-                throw new Error('Invalid event ID');
-            }
-
-            const response = await fetch(`http://localhost:3002/api/events/${id}/favorite`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
+            const response = await fetchWithAuth(`/events/${eventId}/favorite`, {
+                method: 'POST'
             });
 
-            console.log('Response status:', response.status);
-            const data = await response.json();
-            console.log('Response data:', data);
-
-            if (!response.ok) {
-                throw new Error(data.message || 'Failed to update favorites');
+            if (response.isFavorited) {
+                setUserFavorites(prev => new Set([...prev, eventId]));
+                setActionFeedback({ 
+                    message: 'Event added to favorites!', 
+                    type: 'success' 
+                });
+            } else {
+                setUserFavorites(prev => {
+                    const newFavorites = new Set(prev);
+                    newFavorites.delete(eventId);
+                    return newFavorites;
+                });
+                setActionFeedback({ 
+                    message: 'Event removed from favorites', 
+                    type: 'info' 
+                });
             }
-
-            // Update the favorites set based on the response
-            setUserFavorites(prev => {
-                const newFavorites = new Set(prev);
-                if (data.isFavorited) {
-                    newFavorites.add(id);
-                    setActionFeedback({ 
-                        message: 'Event added to favorites!', 
-                        type: 'success' 
-                    });
-                } else {
-                    newFavorites.delete(id);
-                    setActionFeedback({ 
-                        message: 'Event removed from favorites', 
-                        type: 'info' 
-                    });
-                }
-                return newFavorites;
-            });
 
             setTimeout(() => setActionFeedback({ message: '', type: '' }), 3000);
         } catch (err) {
@@ -333,10 +307,10 @@ const EventsList = () => {
                                 <div className="event-actions">
                                     {user && (
                                         <button 
-                                            className={`favorite-button ${userFavorites.has(event.id || event._id) ? 'favorited' : ''}`}
-                                            onClick={() => handleFavorite(event.id || event._id)}
+                                            className={`favorite-button ${userFavorites.has(event._id) ? 'favorited' : ''}`}
+                                            onClick={() => handleFavorite(event._id)}
                                         >
-                                            {userFavorites.has(event.id || event._id) ? '❤️' : '🤍'}
+                                            {userFavorites.has(event._id) ? '❤️' : '🤍'}
                                         </button>
                                     )}
                                     <span className="event-category">{event.category}</span>

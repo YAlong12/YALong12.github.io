@@ -25,7 +25,6 @@ const Header = () => {
               <>
                 <span className="welcome-text">
                   Welcome {user?.email?.split('@')[0]}
-                  {user?.isAdmin && <span className="admin-badge">Admin</span>}
                 </span>
                 <button onClick={handleLogout} className="logout-button">Logout</button>
               </>
@@ -52,10 +51,7 @@ const Header = () => {
             <Link to="/events">Events</Link>
             {isAuthenticated && !user?.isAdmin && <Link to="/dashboard">Dashboard</Link>}
             {user?.isAdmin && (
-              <>
-                <Link to="/admin">Admin</Link>
-                <Link to="/events/create" className="create-event-button">Create Event</Link>
-              </>
+              <Link to="/events/create" className="create-event-button">Create Event</Link>
             )}
           </nav>
         </div>
