@@ -6,46 +6,46 @@ const TermsOfService = () => {
     <div className="static-page">
       <div className="static-page-content">
         <h1>Terms of Service</h1>
-        
+        <p className="last-updated">Last Updated: March 10, 2024</p>
+
         <section>
-          <p>Last updated: March 10, 2024</p>
-          
-          <h2>1. Agreement to Terms</h2>
+          <h2>1. Acceptance of Terms</h2>
           <p>
-            By accessing or using Cassie's services, you agree to be bound by these Terms of Service 
-            and our Privacy Policy. If you disagree with any part of the terms, you may not access 
-            our service.
+            By accessing and using Cassie, you agree to be bound by these Terms of Service 
+            and all applicable laws and regulations.
           </p>
         </section>
 
         <section>
           <h2>2. User Accounts</h2>
+          <p>
+            You are responsible for maintaining the confidentiality of your account 
+            credentials and for all activities under your account.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Event Registration</h2>
+          <p>
+            When registering for events through our platform:
+          </p>
           <ul>
-            <li>You must provide accurate and complete information when creating an account</li>
-            <li>You are responsible for maintaining the security of your account</li>
-            <li>You must notify us immediately of any unauthorized access</li>
-            <li>We reserve the right to terminate accounts at our discretion</li>
+            <li>You agree to provide accurate registration information</li>
+            <li>You understand that registration is subject to availability</li>
+            <li>You agree to follow event-specific rules and guidelines</li>
           </ul>
         </section>
 
         <section>
-          <h2>3. Event Listings</h2>
+          <h2>4. Prohibited Activities</h2>
+          <p>
+            Users may not:
+          </p>
           <ul>
-            <li>Events must be accurately described</li>
-            <li>Organizers are responsible for event content and execution</li>
-            <li>We reserve the right to remove inappropriate content</li>
-            <li>We are not responsible for event outcomes</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>4. User Conduct</h2>
-          <p>You agree not to:</p>
-          <ul>
-            <li>Use the service for any unlawful purpose</li>
-            <li>Post false or misleading information</li>
-            <li>Interfere with the proper operation of the service</li>
-            <li>Attempt to gain unauthorized access</li>
+            <li>Use the platform for unlawful purposes</li>
+            <li>Impersonate others</li>
+            <li>Interfere with the platform's operation</li>
+            <li>Share false or misleading information</li>
           </ul>
         </section>
 

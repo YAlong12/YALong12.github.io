@@ -10,19 +10,19 @@ const AboutUs = () => {
         <section>
           <h2>Our Mission</h2>
           <p>
-            Cassie is dedicated to connecting the Gilbert community through meaningful events and activities. 
-            We strive to make it easier for residents to discover, participate in, and organize local events 
-            that enrich our community life.
+            Cassie is dedicated to bringing the Gilbert community together by making it easier 
+            to discover, organize, and participate in local events. We believe that strong 
+            communities are built through shared experiences and meaningful connections.
           </p>
         </section>
 
         <section>
           <h2>Our Story</h2>
           <p>
-            Founded in Gilbert, Arizona, Cassie was born from a simple idea: to create a central hub where 
-            community members can easily find and engage with local events. Our platform brings together 
-            various organizations, departments, and individuals who contribute to making Gilbert a vibrant 
-            and active community.
+            Founded in Gilbert, Arizona, Cassie was created to address the need for a 
+            centralized platform where residents could easily find and engage with community 
+            events. Our platform serves as a bridge between event organizers and community 
+            members, fostering a more connected and vibrant Gilbert.
           </p>
         </section>
 
@@ -33,10 +33,10 @@ const AboutUs = () => {
           </p>
           <ul>
             <li>Connects residents with local events and activities</li>
-            <li>Helps organizations reach their target audience</li>
-            <li>Facilitates community engagement and participation</li>
-            <li>Promotes local initiatives and gatherings</li>
-            <li>Supports the growth of our community</li>
+            <li>Helps event organizers reach their target audience</li>
+            <li>Streamlines the event registration process</li>
+            <li>Promotes community engagement and participation</li>
+            <li>Supports local initiatives and organizations</li>
           </ul>
         </section>
 

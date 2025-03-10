@@ -6,45 +6,40 @@ const PrivacyPolicy = () => {
     <div className="static-page">
       <div className="static-page-content">
         <h1>Privacy Policy</h1>
-        
-        <section>
-          <p>Last updated: March 10, 2024</p>
-          
-          <h2>Introduction</h2>
-          <p>
-            Your privacy is important to us. This Privacy Policy explains how we collect, use, 
-            disclose, and safeguard your information when you use our service.
-          </p>
-        </section>
+        <p className="last-updated">Last Updated: March 10, 2024</p>
 
         <section>
           <h2>Information We Collect</h2>
-          <h3>Personal Information</h3>
+          <p>We collect information that you provide directly to us, including:</p>
           <ul>
-            <li>Email address</li>
-            <li>Name (when provided)</li>
-            <li>Contact information</li>
-            <li>Event preferences and interests</li>
-          </ul>
-
-          <h3>Usage Information</h3>
-          <ul>
-            <li>Browser type</li>
-            <li>Access times</li>
-            <li>Pages viewed</li>
-            <li>IP address</li>
+            <li>Name and contact information</li>
+            <li>Account credentials</li>
+            <li>Event registration details</li>
+            <li>Communication preferences</li>
           </ul>
         </section>
 
         <section>
           <h2>How We Use Your Information</h2>
+          <p>We use the information we collect to:</p>
           <ul>
-            <li>To provide and maintain our service</li>
-            <li>To notify you about changes to our service</li>
-            <li>To provide customer support</li>
-            <li>To gather analysis or valuable information to improve our service</li>
-            <li>To monitor the usage of our service</li>
-            <li>To detect, prevent and address technical issues</li>
+            <li>Provide and maintain our services</li>
+            <li>Process event registrations</li>
+            <li>Send notifications about events</li>
+            <li>Improve our platform</li>
+            <li>Comply with legal obligations</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Information Sharing</h2>
+          <p>
+            We do not sell your personal information. We may share your information with:
+          </p>
+          <ul>
+            <li>Event organizers for registration purposes</li>
+            <li>Service providers who assist in our operations</li>
+            <li>Law enforcement when required by law</li>
           </ul>
         </section>
 

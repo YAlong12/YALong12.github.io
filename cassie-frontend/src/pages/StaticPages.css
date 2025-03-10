@@ -2,6 +2,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  min-height: calc(100vh - 200px);
 }
 
 .static-page-content {
@@ -12,15 +13,14 @@
 }
 
 .static-page h1 {
-  color: #242938;
+  color: #333;
   margin-bottom: 2rem;
-  font-size: 2rem;
+  text-align: center;
 }
 
 .static-page h2 {
-  color: #242938;
-  margin: 2rem 0 1rem;
-  font-size: 1.5rem;
+  color: #444;
+  margin: 1.5rem 0 1rem;
 }
 
 .static-page h3 {
@@ -35,20 +35,26 @@
 
 .static-page p {
   line-height: 1.6;
-  color: #333;
+  color: #666;
   margin-bottom: 1rem;
 }
 
 .static-page ul {
   list-style-type: disc;
-  margin-left: 1.5rem;
+  margin-left: 2rem;
   margin-bottom: 1rem;
 }
 
 .static-page li {
   margin-bottom: 0.5rem;
-  line-height: 1.4;
-  color: #333;
+  color: #666;
+}
+
+.last-updated {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 @media (max-width: 768px) {
