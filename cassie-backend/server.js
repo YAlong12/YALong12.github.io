@@ -6,6 +6,7 @@ const path = require('path');
 const usersRoutes = require(path.join(__dirname, 'routes', 'users.js'));
 const eventsRoutes = require('./routes/events');
 const usersRouter = require('./routes/users');
+const fs = require('fs');
 
 const app = express();
 
@@ -35,6 +36,14 @@ app.use((req, res, next) => {
     console.log('Headers:', req.headers);
     next();
 });
+
+// Add this line to serve static files from the uploads directory
+app.use('/uploads', express.static('uploads'));
+
+// Make sure the uploads directory exists
+if (!fs.existsSync('uploads')) {
+    fs.mkdirSync('uploads');
+}
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI)

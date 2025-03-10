@@ -13,34 +13,9 @@ const Header = () => {
   };
 
   return (
-    <>
-      {/* Top Navigation Bar */}
-      <div className="top-nav">
-        <div className="top-nav-content">
-          <div className="language-selector">
-            🌍 English ▼
-          </div>
-          <div className="auth-links">
-            {isAuthenticated ? (
-              <>
-                <span className="welcome-text">
-                  Welcome {user?.email?.split('@')[0]}
-                </span>
-                <button onClick={handleLogout} className="logout-button">Logout</button>
-              </>
-            ) : (
-              <>
-                <Link to="/login">Sign In</Link>
-                <Link to="/register" className="register-button">Join</Link>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Main Header */}
-      <header className="main-header">
-        <div className="header-content">
+    <header className="main-header">
+      <div className="header-content">
+        <div className="left-section">
           <div className="logo">
             <Link to="/">
               <img src={gilbertLogo} alt="Gilbert Logo" />
@@ -50,13 +25,21 @@ const Header = () => {
             <Link to="/">Home</Link>
             <Link to="/events">Events</Link>
             {isAuthenticated && !user?.isAdmin && <Link to="/dashboard">Dashboard</Link>}
-            {user?.isAdmin && (
-              <Link to="/events/create" className="create-event-button">Create Event</Link>
-            )}
           </nav>
         </div>
-      </header>
-    </>
+
+        <div className="auth-buttons">
+          {isAuthenticated ? (
+            <button onClick={handleLogout} className="logout-button">Logout</button>
+          ) : (
+            <>
+              <Link to="/login">Sign In</Link>
+              <Link to="/register" className="register-button">Join</Link>
+            </>
+          )}
+        </div>
+      </div>
+    </header>
   );
 };
 

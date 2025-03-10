@@ -1,19 +1,6 @@
 /* Small Top Navigation Bar */
 .top-nav {
-    background-color: #242938;
-    width: 100%;
-    color: #fff;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Top Navigation Content */
-.top-nav-content {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 3px 2rem;
+    display: none;
 }
 
 /* Main Header */
@@ -31,10 +18,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
     max-width: 1400px;
     margin: 0 auto;
     padding: 1rem 2rem;
+    width: 100%;
+}
+
+/* Left side with logo and nav */
+.left-section {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-start;
 }
 
 /* Logo Styling */
@@ -52,8 +47,7 @@
     display: flex;
     align-items: center;
     gap: 2.5rem;
-    margin-left: 3rem;
-    flex: 1;
+    margin-left: 2rem;
 }
 
 .nav-links a {
@@ -69,23 +63,40 @@
     color: #e28a21;
 }
 
-/* Auth Links */
-.auth-links {
+/* Right side with auth buttons */
+.auth-buttons {
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-left: auto;
 }
 
-.auth-links a {
-    color: #fff;
+.auth-buttons a,
+.auth-buttons button {
     text-decoration: none;
-    font-size: 0.9rem;
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
-.auth-links a:hover {
-    opacity: 1;
+.auth-buttons a:first-child {
+    color: #fff;
+}
+
+.auth-buttons .register-button,
+.auth-buttons .logout-button {
+    background-color: #e28a21;
+    color: white;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.auth-buttons .register-button:hover,
+.auth-buttons .logout-button:hover {
+    background-color: #d17d1b;
 }
 
 .welcome-text {
@@ -105,27 +116,6 @@
     font-weight: 500;
 }
 
-.logout-button {
-    background: none;
-    border: 1px solid #fff;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.logout-button:hover {
-    background: #fff;
-    color: #242938;
-}
-
-.register-button {
-    border: 1px solid #fff;
-    padding: 0.4rem 1rem;
-    border-radius: 4px;
-}
-
 /* Language Selector */
 .language-selector {
     font-size: 0.9rem;
@@ -140,12 +130,18 @@
         padding: 1rem;
     }
 
+    .left-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .nav-links {
         margin: 1rem 0;
         justify-content: center;
     }
 
-    .auth-links {
+    .auth-buttons {
+        margin-top: 1rem;
         justify-content: center;
     }
 }

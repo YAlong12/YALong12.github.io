@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Home.css';
 import gilbertDowntown from '../assets/gilbert-downtown.png';
 import testimonialImg from '../assets/testimonial.jpg';
@@ -30,6 +31,8 @@ const eventCategories = [
 ];
 
 const Home = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="home">
       {/* Welcome Section */}
@@ -41,11 +44,13 @@ const Home = () => {
       {/* Hero Image Section */}
       <section className="hero-image">
         <img src={gilbertDowntown} alt="Downtown Gilbert" />
-        <div className="hero-overlay">
-          <h2>Join the Community</h2>
-          <p>Sign up now and start discovering local events!</p>
-          <Link to="/register" className="signup-button">Sign Up to Get Started</Link>
-        </div>
+        {!isAuthenticated && (
+          <div className="hero-overlay">
+            <h2>Join the Community</h2>
+            <p>Sign up now and start discovering local events!</p>
+            <Link to="/register" className="signup-button">Sign Up to Get Started</Link>
+          </div>
+        )}
       </section>
 
       {/* Event Categories Grid */}

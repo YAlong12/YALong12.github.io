@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './EventsList.css';
 import { fetchWithAuth } from '../utils/api';
 import RegistrationModal from '../components/RegistrationModal';
+import defaultEventImage from '../assets/default-event.jpg';
 
 const EventsList = () => {
     const { user } = useAuth();
@@ -223,11 +224,11 @@ const EventsList = () => {
             <div className="events-header">
                 <h1>
                     Community Events
-                    {/* {user?.isAdmin && (
+                    {user?.isAdmin && (
                         <Link to="/events/create" className="create-event-button">
                             Create New Event
                         </Link>
-                    )} */}
+                    )}
                 </h1>
                 
                 <div className="search-filter-section">
@@ -296,110 +297,48 @@ const EventsList = () => {
                 </div>
             </div>
 
-            <div className="events-list">
-                {filteredEvents.length === 0 ? (
-                    <div className="no-events">No events found</div>
-                ) : (
-                    filteredEvents.map(event => (
-                        <div key={event._id} className="event-card">
-                            <div className="event-header">
-                                <h2>{event.title}</h2>
-                                <div className="event-actions">
-                                    {user && (
-                                        <button 
-                                            className={`favorite-button ${userFavorites.has(event._id) ? 'favorited' : ''}`}
-                                            onClick={() => handleFavorite(event._id)}
-                                        >
-                                            {userFavorites.has(event._id) ? '❤️' : '🤍'}
-                                        </button>
-                                    )}
-                                    <span className="event-category">{event.category}</span>
-                                    {user?.isAdmin && (
-                                        <div className="admin-controls">
-                                            <button 
-                                                onClick={() => handleDelete(event._id)} 
-                                                className="delete-button"
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                    )}
+            <div className="events-grid">
+                {filteredEvents.map(event => (
+                    <div key={event._id} className="event-card">
+                        <img 
+                            src={event.imageUrl || defaultEventImage} 
+                            alt={event.title}
+                            className="event-image"
+                            onError={(e) => {
+                                e.target.src = defaultEventImage;
+                                e.target.onerror = null; // Prevent infinite loop
+                            }}
+                        />
+                        {user && !user.isAdmin && (
+                            <button 
+                                className={`favorite-button ${userFavorites.has(event._id) ? 'favorited' : ''}`}
+                                onClick={() => handleFavorite(event._id)}
+                            >
+                                {userFavorites.has(event._id) ? '❤️' : '🤍'}
+                            </button>
+                        )}
+                        <div className="event-content">
+                            <div>
+                                <div className="event-date">
+                                    {formatDate(event.startDate, event.startTime)}
+                                </div>
+                                <h3 className="event-title">{event.title}</h3>
+                                <div className="event-location">
+                                    📍 {event.location}
+                                </div>
+                                <div className="event-price">
+                                    {event.cost || 'Free'}
                                 </div>
                             </div>
-                            
-                            <div className="event-details">
-                                <div className="event-info">
-                                    <p className="event-date">
-                                        <strong>Starts:</strong> {
-                                            event.startDate && event.startTime 
-                                                ? formatDate(event.startDate, event.startTime)
-                                                : 'Date not set'
-                                        }
-                                    </p>
-                                    <p className="event-date">
-                                        <strong>Ends:</strong> {
-                                            event.endDate && event.endTime 
-                                                ? formatDate(event.endDate, event.endTime)
-                                                : 'Date not set'
-                                        }
-                                    </p>
-                                    <p className="event-location">
-                                        <strong>Location:</strong> {event.location}
-                                    </p>
-                                    <p className="event-department">
-                                        <strong>Department:</strong> {event.department}
-                                    </p>
-                                    <p className="event-age-group">
-                                        <strong>Age Group:</strong> {event.ageGroup}
-                                    </p>
-                                    {event.cost && (
-                                        <p className="event-cost">
-                                            <strong>Cost:</strong> {event.cost}
-                                        </p>
-                                    )}
-                                </div>
-                                
-                                <div className="event-description">
-                                    <p>{event.description}</p>
-                                </div>
-
-                                <div className="event-actions-footer">
-                                    {event.registrationRequired ? (
-                                        event.registrationUrl ? (
-                                            <a 
-                                                href={event.registrationUrl} 
-                                                target="_blank" 
-                                                rel="noopener noreferrer"
-                                                className="register-button external"
-                                            >
-                                                Register on External Site ↗
-                                            </a>
-                                        ) : (
-                                            <button 
-                                                className={`register-button ${userRegistrations.has(event.id || event._id) ? 'registered' : ''}`}
-                                                onClick={() => handleRegister(event.id || event._id)}
-                                                disabled={userRegistrations.has(event.id || event._id)}
-                                            >
-                                                {userRegistrations.has(event.id || event._id) ? 'Registered ✓' : 'Register Now'}
-                                            </button>
-                                        )
-                                    ) : (
-                                        <span className="no-registration-required">No registration required</span>
-                                    )}
-                                </div>
-
-                                {event.contactInfo && (
-                                    <div className="event-contact">
-                                        <h3>Contact Information</h3>
-                                        {event.contactInfo.name && <p><strong>Name:</strong> {event.contactInfo.name}</p>}
-                                        {event.contactInfo.phone && <p><strong>Phone:</strong> {event.contactInfo.phone}</p>}
-                                        {event.contactInfo.email && <p><strong>Email:</strong> {event.contactInfo.email}</p>}
-                                    </div>
-                                )}
+                            <div className="event-actions">
+                                <button className="view-details-button">Details</button>
+                                <button className="buy-tickets-button">
+                                    {event.registrationRequired ? 'Register' : 'Join'}
+                                </button>
                             </div>
                         </div>
-                    ))
-                )}
+                    </div>
+                ))}
             </div>
 
             {selectedEvent && (
