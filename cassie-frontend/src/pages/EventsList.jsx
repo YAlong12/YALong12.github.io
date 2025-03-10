@@ -51,13 +51,20 @@ const EventsList = () => {
             if (!user) return;
 
             try {
+                // Fetch both saved and registered events in parallel
                 const [savedResponse, registeredResponse] = await Promise.all([
                     fetchWithAuth('/users/saved-events'),
                     fetchWithAuth('/users/registered-events')
                 ]);
 
-                setUserFavorites(new Set(savedResponse.map(event => event._id)));
-                setUserRegistrations(new Set(registeredResponse.map(event => event._id)));
+                console.log('Registered events response:', registeredResponse); // Debug log
+
+                // Update the registrations set with event IDs
+                const registeredEventIds = registeredResponse.map(event => event._id || event.id);
+                console.log('Registered event IDs:', registeredEventIds); // Debug log
+                
+                setUserRegistrations(new Set(registeredEventIds));
+                setUserFavorites(new Set(savedResponse.map(event => event._id || event.id)));
             } catch (err) {
                 console.error('Error loading user data:', err);
                 setActionFeedback({
@@ -68,7 +75,7 @@ const EventsList = () => {
         };
 
         loadUserData();
-    }, [user]);
+    }, [user]); // Only depend on user changes
 
     useEffect(() => {
         console.log('Current userRegistrations:', userRegistrations);
@@ -184,17 +191,24 @@ const EventsList = () => {
                 body: JSON.stringify(formData)
             });
             
+            // Update local state
             setUserRegistrations(prev => new Set([...prev, selectedEvent.id || selectedEvent._id]));
             
+            // Close modals
             setSelectedEvent(null);
             setSelectedEventDetails(null);
             setShowRegistrationModal(false);
             setIsRegistering(false);
             
+            // Show success message
             setActionFeedback({
                 message: 'Successfully registered for event!',
                 type: 'success'
             });
+
+            // Refresh user data to ensure consistency
+            const registeredResponse = await fetchWithAuth('/users/registered-events');
+            setUserRegistrations(new Set(registeredResponse.map(event => event._id || event.id)));
             
             setTimeout(() => {
                 setActionFeedback({ message: '', type: '' });
@@ -210,27 +224,30 @@ const EventsList = () => {
     };
 
     const handleUnregister = async (eventId) => {
-        if (!user) {
-            navigate('/login');
-            return;
-        }
-
         try {
-            const response = await fetchWithAuth(`/events/${eventId}/unregister`, {
-                method: 'POST'
+            await fetchWithAuth(`/events/${eventId}/unregister`, {
+                method: 'DELETE'
             });
 
-            if (response.success) {
-                setUserRegistrations(prev => {
-                    const newRegistrations = new Set(prev);
-                    newRegistrations.delete(eventId);
-                    return newRegistrations;
-                });
-                setActionFeedback({
-                    message: 'Successfully unregistered from event',
-                    type: 'success'
-                });
-            }
+            // Update local state to reflect the unregistration
+            setUserRegistrations(prev => {
+                const newRegistrations = new Set(prev);
+                newRegistrations.delete(eventId);
+                return newRegistrations;
+            });
+
+            setActionFeedback({
+                message: 'Successfully unregistered from event',
+                type: 'success'
+            });
+
+            // Refresh user data to ensure consistency
+            const registeredResponse = await fetchWithAuth('/users/registered-events');
+            setUserRegistrations(new Set(registeredResponse.map(event => event._id || event.id)));
+
+            setTimeout(() => {
+                setActionFeedback({ message: '', type: '' });
+            }, 3000);
         } catch (err) {
             console.error('Error unregistering:', err);
             setActionFeedback({
