@@ -18,64 +18,24 @@ import healthImg from '../assets/health.jpg';
 import educationImg from '../assets/education.jpg';
 
 const eventCategories = [
-  { 
-    title: 'Community Gatherings', 
-    img: communityImg, 
-    category: 'community-gatherings'
-  },
-  { 
-    title: 'Workshops & Classes', 
-    img: workshopsImg, 
-    category: 'workshops-classes'
-  },
-  { 
-    title: 'Entertainment & Arts', 
-    img: entertainmentImg, 
-    category: 'entertainment-arts'
-  },
-  { 
-    title: 'Sports & Recreation', 
-    img: sportsImg, 
-    category: 'sports-recreation'
-  },
-  { 
-    title: 'Networking & Business', 
-    img: networkingImg, 
-    category: 'networking-business'
-  },
-  { 
-    title: 'Volunteer & Charity', 
-    img: volunteerImg, 
-    category: 'volunteer-charity'
-  },
-  { 
-    title: 'Family & Kids', 
-    img: familyImg, 
-    category: 'family-kids'
-  },
-  { 
-    title: 'Food & Drink', 
-    img: foodImg, 
-    category: 'food-drink'
-  },
-  { 
-    title: 'Health & Wellness', 
-    img: healthImg, 
-    category: 'health-wellness'
-  },
-  { 
-    title: 'Education & Talks', 
-    img: educationImg, 
-    category: 'education-talks'
-  }
+  { title: 'Community Gatherings', img: communityImg },
+  { title: 'Workshops & Classes', img: workshopsImg },
+  { title: 'Entertainment & Arts', img: entertainmentImg },
+  { title: 'Sports & Recreation', img: sportsImg },
+  { title: 'Networking & Business', img: networkingImg },
+  { title: 'Volunteer & Charity', img: volunteerImg },
+  { title: 'Family & Kids', img: familyImg },
+  { title: 'Food & Drink', img: foodImg },
+  { title: 'Health & Wellness', img: healthImg },
+  { title: 'Education & Talks', img: educationImg }
 ];
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  const handleCategoryClick = (category) => {
-    navigate(`/events?category=${category}`);
+  const handleCategoryClick = (title) => {
+    navigate(`/events?category=${encodeURIComponent(title)}`);
   };
 
   return (
@@ -106,7 +66,7 @@ const Home = () => {
             <div 
               key={index} 
               className="category-card"
-              onClick={() => handleCategoryClick(cat.category)}
+              onClick={() => handleCategoryClick(cat.title)}
             >
               <img src={cat.img} alt={cat.title} />
               <div className="category-content">
