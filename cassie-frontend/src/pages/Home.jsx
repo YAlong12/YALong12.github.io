@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Home.css';
 import gilbertDowntown from '../assets/gilbert-downtown.png';
@@ -18,20 +18,65 @@ import healthImg from '../assets/health.jpg';
 import educationImg from '../assets/education.jpg';
 
 const eventCategories = [
-  { title: 'Community Gatherings', img: communityImg, link: '/events?category=Community Gatherings' },
-  { title: 'Workshops & Classes', img: workshopsImg, link: '/events?category=Workshops & Classes' },
-  { title: 'Entertainment & Arts', img: entertainmentImg, link: '/events?category=Entertainment & Arts' },
-  { title: 'Sports & Recreation', img: sportsImg, link: '/events?category=Sports & Recreation' },
-  { title: 'Networking & Business', img: networkingImg, link: '/events?category=Networking & Business' },
-  { title: 'Volunteer & Charity', img: volunteerImg, link: '/events?category=Volunteer & Charity' },
-  { title: 'Family & Kids', img: familyImg, link: '/events?category=Family & Kids' },
-  { title: 'Food & Drink', img: foodImg, link: '/events?category=Food & Drink' },
-  { title: 'Health & Wellness', img: healthImg, link: '/events?category=Health & Wellness' },
-  { title: 'Education & Talks', img: educationImg, link: '/events?category=Education & Talks' }
+  { 
+    title: 'Community Gatherings', 
+    img: communityImg, 
+    category: 'community-gatherings'
+  },
+  { 
+    title: 'Workshops & Classes', 
+    img: workshopsImg, 
+    category: 'workshops-classes'
+  },
+  { 
+    title: 'Entertainment & Arts', 
+    img: entertainmentImg, 
+    category: 'entertainment-arts'
+  },
+  { 
+    title: 'Sports & Recreation', 
+    img: sportsImg, 
+    category: 'sports-recreation'
+  },
+  { 
+    title: 'Networking & Business', 
+    img: networkingImg, 
+    category: 'networking-business'
+  },
+  { 
+    title: 'Volunteer & Charity', 
+    img: volunteerImg, 
+    category: 'volunteer-charity'
+  },
+  { 
+    title: 'Family & Kids', 
+    img: familyImg, 
+    category: 'family-kids'
+  },
+  { 
+    title: 'Food & Drink', 
+    img: foodImg, 
+    category: 'food-drink'
+  },
+  { 
+    title: 'Health & Wellness', 
+    img: healthImg, 
+    category: 'health-wellness'
+  },
+  { 
+    title: 'Education & Talks', 
+    img: educationImg, 
+    category: 'education-talks'
+  }
 ];
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (category) => {
+    navigate(`/events?category=${category}`);
+  };
 
   return (
     <div className="home">
@@ -57,13 +102,17 @@ const Home = () => {
       <section className="event-categories">
         <h2>Explore Events</h2>
         <div className="categories-grid">
-          {eventCategories.map((category, index) => (
-            <Link to={category.link} key={index} className="category-card">
-              <img src={category.img} alt={category.title} />
-              <div className="category-info">
-                <h3>{category.title}</h3>
+          {eventCategories.map((cat, index) => (
+            <div 
+              key={index} 
+              className="category-card"
+              onClick={() => handleCategoryClick(cat.category)}
+            >
+              <img src={cat.img} alt={cat.title} />
+              <div className="category-content">
+                <h3>{cat.title}</h3>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </section>
