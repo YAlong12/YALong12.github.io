@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getApiUrl } from '../utils/api';
 import './ForgotPassword.css';
 
 const ForgotPassword = () => {
@@ -13,13 +14,14 @@ const ForgotPassword = () => {
         setStatus({ type: '', message: '' });
 
         try {
-            const response = await fetch('http://localhost:3002/api/auth/reset-password', {
+            const response = await fetch(getApiUrl('/auth/reset-password'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({ email }),
+                credentials: 'include'
             });
 
             // Check if response is JSON

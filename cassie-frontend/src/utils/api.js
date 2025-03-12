@@ -1,4 +1,10 @@
-export const API_BASE_URL = 'http://localhost:3002/api';
+export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3002/api';
+
+export const getApiUrl = (endpoint) => {
+    const baseUrl = API_BASE_URL.endsWith('/') ? API_BASE_URL.slice(0, -1) : API_BASE_URL;
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    return `${baseUrl}${cleanEndpoint}`;
+};
 
 export const fetchWithAuth = async (endpoint, options = {}) => {
     try {
@@ -9,12 +15,14 @@ export const fetchWithAuth = async (endpoint, options = {}) => {
             ...options.headers
         };
 
-        console.log('Fetching:', `${API_BASE_URL}${endpoint}`);
+        const url = getApiUrl(endpoint);
+        console.log('Fetching:', url);
         console.log('Options:', { ...options, headers });
 
-        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        const response = await fetch(url, {
             ...options,
-            headers
+            headers,
+            credentials: 'include'
         });
 
         console.log('Response status:', response.status);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
 import { useAuth } from '../context/AuthContext';
-import { API_BASE_URL } from '../utils/api';
+import { getApiUrl } from '../utils/api';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ function Login() {
         setIsLoading(true);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/users/login`, {
+            const response = await fetch(getApiUrl('/users/login'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

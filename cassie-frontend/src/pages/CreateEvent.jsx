@@ -93,7 +93,7 @@ const CreateEvent = () => {
             delete formattedData.contactEmail;
 
             console.log('Sending request:', {
-                url: 'http://localhost:3002/api/events',
+                url: getApiUrl('/events'),
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -103,14 +103,15 @@ const CreateEvent = () => {
                 data: formattedData
             });
 
-            const response = await fetch('http://localhost:3002/api/events', {
+            const response = await fetch(getApiUrl('/events'), {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify(formattedData)
+                body: JSON.stringify(formattedData),
+                credentials: 'include'
             });
 
             console.log('Response:', {

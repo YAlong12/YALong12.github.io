@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { getApiUrl } from '../utils/api';
 import './Auth.css';
 
 function Register() {
@@ -32,12 +33,13 @@ function Register() {
         }
 
         try {
-            const response = await fetch('http://localhost:3002/api/users/register', {
+            const response = await fetch(getApiUrl('/users/register'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),
+                credentials: 'include'
             });
 
             const data = await response.json();

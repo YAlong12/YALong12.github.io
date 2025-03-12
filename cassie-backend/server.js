@@ -13,10 +13,25 @@ const app = express();
 
 // CORS configuration - must be before any routes
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'],
+    origin: function(origin, callback) {
+        const allowedOrigins = [
+            'http://localhost:3000',
+            'http://localhost:3001', 
+            'http://localhost:3002',
+            'https://yalong12.netlify.app',  // Add your Netlify domain
+            process.env.FRONTEND_URL // Allow configurable frontend URL
+        ].filter(Boolean); // Remove any undefined values
+        
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
 }));
 
 // Body parser middleware
