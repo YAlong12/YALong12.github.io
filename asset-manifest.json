@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.bc3b840e.css",
-    "main.js": "/static/js/main.cbcf18fb.js",
-    "static/js/453.a00a6802.chunk.js": "/static/js/453.a00a6802.chunk.js",
-    "static/media/gilbert-downtown.png": "/static/media/gilbert-downtown.71998bb589fcd30db647.png",
-    "static/media/food.jpg": "/static/media/food.e2e14ff035fbcace00bf.jpg",
-    "static/media/family.jpg": "/static/media/family.ab99ba77f5a35e2167bd.jpg",
-    "static/media/community.jpg": "/static/media/community.563ecaa61bc3cfa1d8c9.jpg",
-    "static/media/workshops.jpg": "/static/media/workshops.f809c1e92642c985b1db.jpg",
-    "static/media/sports.jpg": "/static/media/sports.1074090858c6b017b5d4.jpg",
-    "static/media/health.jpg": "/static/media/health.a4773e482289cc3cb386.jpg",
-    "static/media/volunteer.jpg": "/static/media/volunteer.00ae98c54e74e27c4b1f.jpg",
-    "static/media/education.jpg": "/static/media/education.1a40a4bb057eb77c3c34.jpg",
-    "static/media/entertainment.jpg": "/static/media/entertainment.312582f2e0cb3cab3a79.jpg",
-    "static/media/testimonial.jpg": "/static/media/testimonial.e0fa5118e4670ef38d91.jpg",
-    "static/media/networking.jpg": "/static/media/networking.7343e013cd9f422713e5.jpg",
-    "static/media/default-event.jpg": "/static/media/default-event.d3d7b89f808711007a97.jpg",
-    "index.html": "/index.html",
-    "main.bc3b840e.css.map": "/static/css/main.bc3b840e.css.map",
-    "main.cbcf18fb.js.map": "/static/js/main.cbcf18fb.js.map",
-    "453.a00a6802.chunk.js.map": "/static/js/453.a00a6802.chunk.js.map"
+    "main.css": "/YALong12.github.io/static/css/main.bc3b840e.css",
+    "main.js": "/YALong12.github.io/static/js/main.8a6ac71b.js",
+    "static/js/453.a00a6802.chunk.js": "/YALong12.github.io/static/js/453.a00a6802.chunk.js",
+    "static/media/gilbert-downtown.png": "/YALong12.github.io/static/media/gilbert-downtown.71998bb589fcd30db647.png",
+    "static/media/food.jpg": "/YALong12.github.io/static/media/food.e2e14ff035fbcace00bf.jpg",
+    "static/media/family.jpg": "/YALong12.github.io/static/media/family.ab99ba77f5a35e2167bd.jpg",
+    "static/media/community.jpg": "/YALong12.github.io/static/media/community.563ecaa61bc3cfa1d8c9.jpg",
+    "static/media/workshops.jpg": "/YALong12.github.io/static/media/workshops.f809c1e92642c985b1db.jpg",
+    "static/media/sports.jpg": "/YALong12.github.io/static/media/sports.1074090858c6b017b5d4.jpg",
+    "static/media/health.jpg": "/YALong12.github.io/static/media/health.a4773e482289cc3cb386.jpg",
+    "static/media/volunteer.jpg": "/YALong12.github.io/static/media/volunteer.00ae98c54e74e27c4b1f.jpg",
+    "static/media/education.jpg": "/YALong12.github.io/static/media/education.1a40a4bb057eb77c3c34.jpg",
+    "static/media/entertainment.jpg": "/YALong12.github.io/static/media/entertainment.312582f2e0cb3cab3a79.jpg",
+    "static/media/testimonial.jpg": "/YALong12.github.io/static/media/testimonial.e0fa5118e4670ef38d91.jpg",
+    "static/media/networking.jpg": "/YALong12.github.io/static/media/networking.7343e013cd9f422713e5.jpg",
+    "static/media/default-event.jpg": "/YALong12.github.io/static/media/default-event.d3d7b89f808711007a97.jpg",
+    "index.html": "/YALong12.github.io/index.html",
+    "main.bc3b840e.css.map": "/YALong12.github.io/static/css/main.bc3b840e.css.map",
+    "main.8a6ac71b.js.map": "/YALong12.github.io/static/js/main.8a6ac71b.js.map",
+    "453.a00a6802.chunk.js.map": "/YALong12.github.io/static/js/453.a00a6802.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.bc3b840e.css",
-    "static/js/main.cbcf18fb.js"
+    "static/js/main.8a6ac71b.js"
   ]
 }
