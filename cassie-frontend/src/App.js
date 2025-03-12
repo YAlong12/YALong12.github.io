@@ -1,6 +1,6 @@
 // src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -20,7 +20,7 @@ import './App.css';
 function App() {
     return (
         <AuthProvider>
-            <Router basename={process.env.PUBLIC_URL}>
+            <Router>
                 <div className="app">
                     <Header />
                     <main className="main-content">
