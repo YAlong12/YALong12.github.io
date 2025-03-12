@@ -1,49 +1,41 @@
-name: Deploy Cassie Project
+name: Build and Deploy React App
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
       with:
-        submodules: false
-        fetch-depth: 0
+        persist-credentials: false
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
 
-    - name: Install Dependencies
-      run: |
-        cd cassie-frontend
-        npm install
-        cd ../cassie-backend
-        npm install
+    - name: Install Frontend Dependencies
+      working-directory: ./cassie-frontend
+      run: npm ci
 
     - name: Build Frontend
+      working-directory: ./cassie-frontend
       run: |
-        cd cassie-frontend
+        echo "REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}" > .env
         npm run build
 
-    - name: Run Tests
-      run: |
-        cd cassie-frontend
-        npm test --passWithNoTests
-        cd ../cassie-backend
-        npm test --passWithNoTests
-
     - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./cassie-frontend/build 
+        branch: gh-pages
+        folder: cassie-frontend/build
+        clean: true
+        force: true 

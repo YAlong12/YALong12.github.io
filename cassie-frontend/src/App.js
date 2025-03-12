@@ -1,6 +1,6 @@
 // src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -11,56 +11,41 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 import CreateEvent from './pages/CreateEvent';
-import PageTransition from './components/PageTransition';
 import AboutUs from './pages/AboutUs';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 
 import './App.css';
 
-const AppContent = () => {
-    const location = useLocation();
-
-    return (
-        <div className="app-container">
-            <Header />
-            <PageTransition location={location}>
-                <Routes location={location}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/events" element={<EventsList />} />
-                    <Route 
-                        path="/dashboard" 
-                        element={
-                            <ProtectedRoute>
-                                <Dashboard />
-                            </ProtectedRoute>
-                        } 
-                    />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route 
-                        path="/events/create" 
-                        element={
-                            <ProtectedRoute adminOnly>
-                                <CreateEvent />
-                            </ProtectedRoute>
-                        } 
-                    />
-                    <Route path="/about" element={<AboutUs />} />
-                    <Route path="/privacy" element={<PrivacyPolicy />} />
-                    <Route path="/terms" element={<TermsOfService />} />
-                </Routes>
-            </PageTransition>
-            <Footer />
-        </div>
-    );
-};
-
 function App() {
     return (
         <AuthProvider>
             <Router>
-                <AppContent />
+                <div className="app">
+                    <Header />
+                    <main className="main-content">
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/events" element={<EventsList />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/dashboard" element={
+                                <ProtectedRoute>
+                                    <Dashboard />
+                                </ProtectedRoute>
+                            } />
+                            <Route path="/events/create" element={
+                                <ProtectedRoute>
+                                    <CreateEvent />
+                                </ProtectedRoute>
+                            } />
+                            <Route path="/about" element={<AboutUs />} />
+                            <Route path="/privacy" element={<PrivacyPolicy />} />
+                            <Route path="/terms" element={<TermsOfService />} />
+                        </Routes>
+                    </main>
+                    <Footer />
+                </div>
             </Router>
         </AuthProvider>
     );
