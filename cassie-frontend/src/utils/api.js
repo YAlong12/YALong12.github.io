@@ -1,7 +1,7 @@
 // Determine the base URL based on the environment
 const getBaseUrl = () => {
     if (process.env.NODE_ENV === 'production') {
-        return 'https://cassie-backend.onrender.com/api';
+        return 'http://localhost:3002/api';  // Docker backend URL
     }
     return 'http://localhost:3002/api';
 };
