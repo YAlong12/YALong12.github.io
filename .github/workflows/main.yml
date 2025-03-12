@@ -39,18 +39,14 @@ jobs:
         npm run build
         echo "Build output contents:"
         ls -la build/
-
-    - name: Prepare deployment
-      run: |
-        cp -r cassie-frontend/build/* .
-        touch .nojekyll
-        ls -la
+        cp build/index.html build/404.html
+        touch build/.nojekyll
 
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
-        folder: .
+        folder: cassie-frontend/build
         clean: true
         force: true 
