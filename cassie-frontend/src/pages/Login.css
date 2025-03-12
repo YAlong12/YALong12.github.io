@@ -1,0 +1,15 @@
+.form-links {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.forgot-password-link {
+    color: #e28a21;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.forgot-password-link:hover {
+    color: #d17d1b;
+} 

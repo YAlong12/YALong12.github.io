@@ -1,0 +1,160 @@
+/* Small Top Navigation Bar */
+.top-nav {
+    display: none;
+}
+
+/* Main Header */
+.main-header {
+    background-color: #242938;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Header Content Container */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    width: 100%;
+}
+
+/* Left side with logo and nav */
+.left-section {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-start;
+}
+
+/* Logo Styling */
+.logo {
+    flex: 0 0 auto;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+}
+
+/* Navigation Menu */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #e28a21;
+}
+
+/* Right side with auth buttons */
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+}
+
+.auth-buttons a,
+.auth-buttons button {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.auth-buttons a:first-child {
+    color: #fff;
+}
+
+.auth-buttons .register-button,
+.auth-buttons .logout-button {
+    background-color: #e28a21;
+    color: white;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.auth-buttons .register-button:hover,
+.auth-buttons .logout-button:hover {
+    background-color: #d17d1b;
+}
+
+.welcome-text {
+    color: #fff;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-badge {
+    background-color: #e28a21;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Language Selector */
+.language-selector {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .left-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links {
+        margin: 1rem 0;
+        justify-content: center;
+    }
+
+    .auth-buttons {
+        margin-top: 1rem;
+        justify-content: center;
+    }
+}
+
+.create-event-button {
+    background-color: #e28a21;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.create-event-button:hover {
+    background-color: #d17d1b;
+    color: white !important;
+}

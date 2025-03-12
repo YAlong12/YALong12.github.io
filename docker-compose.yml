@@ -1,0 +1,56 @@
+services:
+  mongodb:
+    container_name: cassie-mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  backend:
+    container_name: cassie-backend
+    build: ./cassie-backend
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./cassie-backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://cassie-mongo:27017/cassie
+      - PORT=3002
+      - JWT_SECRET=a1b2c3d4e5f6g7h
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  frontend:
+    container_name: cassie-frontend
+    build: ./cassie-frontend
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./cassie-frontend:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:3002
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo_data:
