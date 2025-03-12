@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "./static/css/main.bc3b840e.css",
-    "main.js": "./static/js/main.49404aa6.js",
+    "main.js": "./static/js/main.3ee673f4.js",
     "static/js/453.a00a6802.chunk.js": "./static/js/453.a00a6802.chunk.js",
     "static/media/gilbert-downtown.png": "./static/media/gilbert-downtown.71998bb589fcd30db647.png",
     "static/media/food.jpg": "./static/media/food.e2e14ff035fbcace00bf.jpg",
@@ -18,11 +18,11 @@
     "static/media/default-event.jpg": "./static/media/default-event.d3d7b89f808711007a97.jpg",
     "index.html": "./index.html",
     "main.bc3b840e.css.map": "./static/css/main.bc3b840e.css.map",
-    "main.49404aa6.js.map": "./static/js/main.49404aa6.js.map",
+    "main.3ee673f4.js.map": "./static/js/main.3ee673f4.js.map",
     "453.a00a6802.chunk.js.map": "./static/js/453.a00a6802.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.bc3b840e.css",
-    "static/js/main.49404aa6.js"
+    "static/js/main.3ee673f4.js"
   ]
 }
