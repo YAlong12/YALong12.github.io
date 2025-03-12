@@ -18,21 +18,27 @@ app.use(cors({
             'http://localhost:3000',
             'http://localhost:3001', 
             'http://localhost:3002',
-            'https://yalong12.netlify.app',  // Add your Netlify domain
-            process.env.FRONTEND_URL // Allow configurable frontend URL
-        ].filter(Boolean); // Remove any undefined values
+            'https://cassieapp.netlify.app',  // Add Netlify domain
+            process.env.FRONTEND_URL
+        ].filter(Boolean);
         
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        // For development - allow requests with no origin
+        if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    exposedHeaders: ['Content-Range', 'X-Content-Range'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204
 }));
+
+// Add CORS preflight options handler
+app.options('*', cors());
 
 // Body parser middleware
 app.use(express.json());

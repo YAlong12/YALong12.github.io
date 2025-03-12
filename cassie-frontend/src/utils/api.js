@@ -27,6 +27,8 @@ export const fetchWithAuth = async (endpoint, options = {}) => {
         const token = localStorage.getItem('token');
         const headers = {
             'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Origin': window.location.origin,
             ...(token && { 'Authorization': `Bearer ${token}` }),
             ...options.headers
         };
@@ -41,7 +43,8 @@ export const fetchWithAuth = async (endpoint, options = {}) => {
         const response = await fetch(url, {
             ...options,
             headers,
-            credentials: 'include'
+            credentials: 'include',
+            mode: 'cors'
         });
 
         console.log('Response status:', response.status);
@@ -62,4 +65,16 @@ export const fetchWithAuth = async (endpoint, options = {}) => {
         console.error('Fetch error:', err);
         throw err;
     }
+};
+
+// Add a function to delete an event
+export const deleteEvent = async (eventId) => {
+    return fetchWithAuth(`/events/${eventId}`, {
+        method: 'DELETE'
+    });
+};
+
+// Add a function to get all events
+export const getAllEvents = async () => {
+    return fetchWithAuth('/events');
 }; 
