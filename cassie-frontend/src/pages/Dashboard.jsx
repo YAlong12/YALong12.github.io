@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
 import { useAuth } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { fetchWithAuth } from '../utils/api';
@@ -22,6 +22,11 @@ const Dashboard = () => {
         eventId: null,
         eventTitle: ''
     });
+    const navigate = useNavigate();
+
+    const handleViewDetails = (event) => {
+        navigate(`/events/${event._id || event.id}`);
+    };
 
     const fetchUserEvents = async () => {
         if (!user) return;
@@ -52,7 +57,7 @@ const Dashboard = () => {
         if (user) {
             fetchUserEvents();
         }
-    }, [user]);
+    }, [user, fetchUserEvents]);
 
     const formatDate = (date, time) => {
         try {

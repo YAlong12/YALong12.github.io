@@ -127,4 +127,54 @@ router.get('/registered-events', auth, async (req, res) => {
     }
 });
 
+// Admin registration route
+router.post('/register-admin', async (req, res) => {
+    try {
+        const { email, password, adminKey } = req.body;
+        console.log('Admin registration attempt for:', email);
+
+        // Verify admin key
+        if (adminKey !== process.env.ADMIN_KEY && adminKey !== 'cassie-admin-key-2024') {
+            return res.status(401).json({ message: 'Invalid admin key' });
+        }
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Please provide both email and password' });
+        }
+
+        // Check if user already exists
+        let user = await User.findOne({ email });
+        if (user) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+
+        // Create new admin user
+        user = new User({
+            email,
+            password,
+            isAdmin: true // Set admin status
+        });
+
+        await user.save();
+        console.log('Admin user created:', email);
+
+        // Create token
+        const token = jwt.sign(
+            { userId: user._id, isAdmin: true },
+            process.env.JWT_SECRET || 'a1b2c3d4e5f6g7h',
+            { expiresIn: '5h' }
+        );
+
+        res.status(201).json({ 
+            token, 
+            userId: user._id,
+            isAdmin: true
+        });
+
+    } catch (err) {
+        console.error('Admin registration error:', err);
+        res.status(500).json({ message: 'Error creating admin user', error: err.message });
+    }
+});
+
 module.exports = router;

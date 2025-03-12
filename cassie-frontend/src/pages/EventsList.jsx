@@ -95,27 +95,6 @@ const EventsList = () => {
         }
     }, [searchParams]);
 
-    const handleDelete = async (eventId) => {
-        if (!window.confirm('Are you sure you want to delete this event?')) return;
-        
-        try {
-            const response = await fetch(`http://localhost:3002/api/events/${eventId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-
-            if (!response.ok) throw new Error('Failed to delete event');
-            
-            // Remove event from state
-            setEvents(events.filter(event => event._id !== eventId));
-        } catch (err) {
-            console.error('Error deleting event:', err);
-            alert('Failed to delete event');
-        }
-    };
-
     const handleFavorite = async (eventId) => {
         if (!user) {
             navigate('/login');
@@ -124,11 +103,10 @@ const EventsList = () => {
 
         try {
             // Get the event ID, checking both id and _id properties
-            const id = eventId || event.id;
-            console.log('Event ID:', id);
+            console.log('Event ID:', eventId);
 
             // Make sure we have a valid eventId
-            if (!id) {
+            if (!eventId) {
                 console.error('No event ID provided');
                 setActionFeedback({ 
                     message: 'Could not favorite event: Invalid event ID', 
@@ -137,7 +115,7 @@ const EventsList = () => {
                 return;
             }
 
-            const response = await fetchWithAuth(`/events/${id}/favorite`, {
+            const response = await fetchWithAuth(`/events/${eventId}/favorite`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -148,7 +126,7 @@ const EventsList = () => {
 
             if (response.isFavorited !== undefined) {
                 if (response.isFavorited) {
-                    setUserFavorites(prev => new Set([...prev, id]));
+                    setUserFavorites(prev => new Set([...prev, eventId]));
                     setActionFeedback({ 
                         message: 'Event added to favorites!', 
                         type: 'success' 
@@ -156,7 +134,7 @@ const EventsList = () => {
                 } else {
                     setUserFavorites(prev => {
                         const newFavorites = new Set(prev);
-                        newFavorites.delete(id);
+                        newFavorites.delete(eventId);
                         return newFavorites;
                     });
                     setActionFeedback({ 

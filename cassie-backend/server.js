@@ -7,12 +7,13 @@ const usersRoutes = require(path.join(__dirname, 'routes', 'users.js'));
 const eventsRoutes = require('./routes/events');
 const usersRouter = require('./routes/users');
 const fs = require('fs');
+const User = require('./models/User');
 
 const app = express();
 
 // CORS configuration - must be before any routes
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -57,6 +58,16 @@ app.use('/api/events', eventsRoutes);
 // Test route
 app.get('/test', (req, res) => {
     res.json({ message: 'Backend is working' });
+});
+
+// Debug route to check users
+app.get('/api/debug/users', async (req, res) => {
+    try {
+        const users = await User.find({}, { email: 1, isAdmin: 1 });
+        res.json({ count: users.length, users });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // Error handling middleware - must be last

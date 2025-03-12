@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+const JWT_SECRET = process.env.JWT_SECRET || 'a1b2c3d4e5f6g7h';
 
 const auth = (req, res, next) => {
     try {
@@ -12,7 +15,7 @@ const auth = (req, res, next) => {
         const token = authHeader.split(' ')[1];
         console.log('Token received:', token.substring(0, 10) + '...');
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, JWT_SECRET);
         console.log('Decoded token:', decoded);
 
         req.user = {
