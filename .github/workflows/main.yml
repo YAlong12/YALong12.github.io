@@ -37,22 +37,14 @@ jobs:
       run: |
         echo "REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}" > .env
         npm run build
-        echo "Build output contents:"
-        ls -la build/
-
-    - name: Prepare deployment
-      run: |
-        rm -rf public
-        mkdir -p public
-        cp -r cassie-frontend/build/* public/
-        touch public/.nojekyll
-        ls -la public/
+        cp build/index.html build/404.html
+        touch build/.nojekyll
 
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
-        folder: public
+        folder: cassie-frontend/build
         clean: true
         force: true 

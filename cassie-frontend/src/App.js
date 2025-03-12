@@ -20,7 +20,7 @@ import './App.css';
 function App() {
     return (
         <AuthProvider>
-            <Router>
+            <Router basename="">
                 <div className="app">
                     <Header />
                     <main className="main-content">
