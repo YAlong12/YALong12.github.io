@@ -37,6 +37,12 @@ jobs:
       run: |
         echo "REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}" > .env
         npm run build
+        echo "Build output contents:"
+        ls -la build/
+
+    - name: Create .nojekyll file
+      working-directory: ./cassie-frontend
+      run: touch build/.nojekyll
 
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
