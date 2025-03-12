@@ -1,10 +1,31 @@
 {
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "dotenv": "^16.4.7",
-    "mongodb": "4.1",
-    "mongoose": "^8.12.1",
-    "multer": "^1.4.5-lts.1",
-    "uuid": "^11.1.0"
+  "name": "cassie-project",
+  "version": "1.0.0",
+  "description": "Community Activity and Service System for Inclusive Engagement",
+  "scripts": {
+    "install-all": "cd cassie-frontend && npm install && cd ../cassie-backend && npm install",
+    "start": "concurrently \"cd cassie-backend && npm start\" \"cd cassie-frontend && npm start\"",
+    "build": "cd cassie-frontend && npm run build",
+    "test": "concurrently \"cd cassie-frontend && npm test\" \"cd cassie-backend && npm test\"",
+    "deploy": "cd cassie-frontend && npm run build && gh-pages -d build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YAlong12/YALong12.github.io.git"
+  },
+  "keywords": [
+    "community",
+    "events",
+    "engagement"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YAlong12/YALong12.github.io/issues"
+  },
+  "homepage": "https://yalong12.github.io",
+  "devDependencies": {
+    "concurrently": "^8.0.1",
+    "gh-pages": "^5.0.0"
   }
 }
