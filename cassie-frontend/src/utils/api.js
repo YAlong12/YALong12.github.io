@@ -1,9 +1,25 @@
-export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3002/api';
+// Determine the base URL based on the environment
+const getBaseUrl = () => {
+    if (process.env.NODE_ENV === 'production') {
+        return 'https://cassie-backend.onrender.com/api';
+    }
+    return 'http://localhost:3002/api';
+};
+
+export const API_BASE_URL = getBaseUrl();
+
+// Log the environment and final URL for debugging
+console.log('Current environment:', process.env.NODE_ENV);
+console.log('Final API_BASE_URL:', API_BASE_URL);
 
 export const getApiUrl = (endpoint) => {
     const baseUrl = API_BASE_URL.endsWith('/') ? API_BASE_URL.slice(0, -1) : API_BASE_URL;
     const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-    return `${baseUrl}${cleanEndpoint}`;
+    const finalUrl = `${baseUrl}${cleanEndpoint}`;
+    
+    // Log the constructed URL for debugging
+    console.log('Constructed API URL:', finalUrl);
+    return finalUrl;
 };
 
 export const fetchWithAuth = async (endpoint, options = {}) => {
@@ -17,7 +33,10 @@ export const fetchWithAuth = async (endpoint, options = {}) => {
 
         const url = getApiUrl(endpoint);
         console.log('Fetching:', url);
-        console.log('Options:', { ...options, headers });
+        console.log('Request options:', {
+            ...options,
+            headers: { ...headers, Authorization: token ? 'Bearer [REDACTED]' : undefined }
+        });
 
         const response = await fetch(url, {
             ...options,
@@ -26,11 +45,13 @@ export const fetchWithAuth = async (endpoint, options = {}) => {
         });
 
         console.log('Response status:', response.status);
+        console.log('Response headers:', Object.fromEntries(response.headers.entries()));
 
         if (!response.ok) {
             const error = await response.json().catch(() => ({ 
                 message: `HTTP error! status: ${response.status}` 
             }));
+            console.error('Response error:', error);
             throw new Error(error.message || 'Request failed');
         }
 
